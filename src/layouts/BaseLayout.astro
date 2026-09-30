@@ -18,6 +18,23 @@ const ldBlocks = [websiteJsonLd(), organizationJsonLd(), ...jsonLd];
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {SITE.googleSiteVerification !== '' && (
+      <meta name="google-site-verification" content={SITE.googleSiteVerification} />
+    )}
+    {SITE.bingSiteVerification !== '' && (
+      <meta name="msvalidate.01" content={SITE.bingSiteVerification} />
+    )}
+    {SITE.ga4MeasurementId !== '' && (
+      <script
+        async
+        src={`https://www.googletagmanager.com/gtag/js?id=${SITE.ga4MeasurementId}`}
+      ></script>
+    )}
+    {SITE.ga4MeasurementId !== '' && (
+      <script
+        set:html={`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${SITE.ga4MeasurementId}');`}
+      ></script>
+    )}
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
