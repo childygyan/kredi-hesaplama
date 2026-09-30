@@ -2,6 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import KrediHesaplayici from '../components/KrediHesaplayici.astro';
 import SssBolumu from '../components/SssBolumu.astro';
+import ReklamAlani from '../components/ReklamAlani.astro';
+import BankaCta from '../components/BankaCta.astro';
 
 const sorular = [
   {
@@ -71,6 +73,8 @@ const sorular = [
       aciklama="Tutar, faiz oranı ve vadeyi girin; aylık taksitinizi ve ödeme planınızı görün."
     />
   </div>
+
+  <ReklamAlani />
 
   <section class="mt-12" aria-label="Kredi türüne göre hesaplama">
     <h2 class="text-2xl font-bold text-slate-900">Kredi Türüne Göre Hesaplama</h2>
@@ -155,6 +159,8 @@ const sorular = [
       </p>
     </div>
   </section>
+
+  <BankaCta baslik="Size Uygun Kredi Tekliflerini Karşılaştırın" />
 
   <SssBolumu sorular={sorular} />
 </BaseLayout>

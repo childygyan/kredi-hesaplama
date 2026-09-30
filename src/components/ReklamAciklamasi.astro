@@ -1,0 +1,17 @@
+---
+/**
+ * ReklamAciklamasi — Türkçe reklam/sponsorlu bağlantı açıklaması.
+ * Yalnızca AdSense veya affiliate aktifken footer'da görünür.
+ */
+import { SITE } from '../config/site.ts';
+
+const aktif = SITE.adsenseClientId !== '' || SITE.affiliate.enabled;
+---
+
+{aktif && (
+  <p class="mt-2 text-xs text-slate-400">
+    Reklam açıklaması: Bu sitede gösterilen reklamlar ve "Sponsorlu" olarak işaretlenen
+    bağlantılar aracılığıyla gelir elde edebiliriz. Bu durum, hesaplayıcıların
+    sonuçlarını veya size sunulan bilgileri etkilemez.
+  </p>
+)}

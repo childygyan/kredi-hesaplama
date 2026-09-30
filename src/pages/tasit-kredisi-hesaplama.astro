@@ -2,6 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import KrediHesaplayici from '../components/KrediHesaplayici.astro';
 import SssBolumu from '../components/SssBolumu.astro';
+import ReklamAlani from '../components/ReklamAlani.astro';
+import BankaCta from '../components/BankaCta.astro';
 
 const sorular = [
   {
@@ -59,6 +61,8 @@ const sorular = [
     />
   </div>
 
+  <ReklamAlani />
+
   <section class="mt-12" aria-label="Taşıt kredisi hakkında">
     <h2 class="text-2xl font-bold text-slate-900">Taşıt Kredisi Hesaplama Hakkında</h2>
     <div class="mt-4 max-w-none space-y-4 text-slate-600">
@@ -92,6 +96,8 @@ const sorular = [
       <li><a href="/erken-odeme-hesaplama/" class="hover:underline">Erken Ödeme Hesaplama</a></li>
     </ul>
   </section>
+
+  <BankaCta baslik="Taşıt Kredisi Tekliflerini Karşılaştırın" />
 
   <SssBolumu sorular={sorular} />
 </BaseLayout>

@@ -1,0 +1,33 @@
+---
+/**
+ * ReklamAlani — Google AdSense yer tutucu.
+ * SITE.adsenseClientId boşken hiçbir şey render etmez (bozuk reklam çağrısı yok).
+ * Firoz AdSense onayından sonra ID'yi girince slotlar otomatik aktifleşir.
+ */
+import { SITE } from '../config/site.ts';
+
+interface Props {
+  /** AdSense reklam birimi kimliği (data-ad-slot). Onay sonrası Firoz girer. */
+  adSlot?: string;
+  format?: string;
+}
+
+const { adSlot = '', format = 'auto' } = Astro.props;
+const aktif = SITE.adsenseClientId !== '';
+const pushKodu = '(adsbygoogle = window.adsbygoogle || []).push({});';
+---
+
+{aktif && (
+  <div class="my-8" role="complementary" aria-label="Reklam">
+    <ins
+      class="adsbygoogle"
+      style="display:block"
+      data-ad-client={SITE.adsenseClientId}
+      data-ad-slot={adSlot || undefined}
+      data-ad-format={format}
+      data-full-width-responsive="true"
+    ></ins>
+    <script is:inline set:html={pushKodu}></script>
+  </div>
+)}
+<!-- ReklamAlani: AdSense pasif — site.ts içinde adsenseClientId girilince görünür -->

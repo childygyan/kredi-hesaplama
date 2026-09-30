@@ -1,0 +1,38 @@
+---
+/**
+ * BankaCta — banka affiliate / lead-gen CTA yer tutucu.
+ * SITE.affiliate.enabled false iken hiçbir şey render etmez.
+ * DÜRÜSTLÜK: banka adı, oran veya "anlaşmalı" iddiası içermez; metin geneldir.
+ */
+import { SITE } from '../config/site.ts';
+
+interface Props {
+  baslik?: string;
+}
+
+const { baslik = 'Kredi Tekliflerini Karşılaştırın' } = Astro.props;
+const aktif = SITE.affiliate.enabled && SITE.affiliate.ctaUrl !== '';
+---
+
+{aktif && (
+  <aside
+    aria-label="Sponsorlu bağlantı"
+    class="my-8 rounded-2xl border border-amber-200 bg-amber-50 p-6"
+  >
+    <p class="text-xs font-semibold uppercase tracking-wide text-amber-700">Sponsorlu</p>
+    <h2 class="mt-1 text-xl font-bold text-slate-900">{baslik}</h2>
+    <p class="mt-2 text-sm text-slate-600">
+      Size uygun kredi seçeneklerini bankaların güncel teklifleriyle karşılaştırın.
+      Başvuru ve onay tamamen ilgili bankanın değerlendirmesine bağlıdır.
+    </p>
+    <a
+      href={SITE.affiliate.ctaUrl}
+      rel="sponsored nofollow noopener"
+      target="_blank"
+      class="mt-4 inline-block rounded-lg bg-brand-700 px-6 py-3 font-semibold text-white hover:bg-brand-800"
+    >
+      Teklifleri Gör
+    </a>
+  </aside>
+)}
+<!-- BankaCta: affiliate pasif — ortaklık sonrası site.ts içinde enabled/ctaUrl girilince görünür -->

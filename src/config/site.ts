@@ -21,6 +21,11 @@ export const SITE = {
      * While disabled, affiliate CTA slots render nothing.
      */
     enabled: false,
+    /**
+     * TODO(Firoz): affiliate/lead-gen hedef URL'si (ortaklık sonrası).
+     * Örn. "https://example.com/kredi-teklifleri?kaynak=kredi-hesaplama".
+     */
+    ctaUrl: '',
   },
 } as const;
 

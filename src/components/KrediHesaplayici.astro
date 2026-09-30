@@ -3,6 +3,9 @@
  * KrediHesaplayici — istemci taraflı interaktif kredi hesaplama bileşeni.
  * DÜRÜSTLÜK: faiz oranı kullanıcıdan alınır; bu bileşen güncel oran sunmaz.
  * Örnek değerler "örnek" olarak etiketlenir.
+ *
+ * Yapı: betik, data-öznitelikleri üzerinden kök öğeye göre çalışır
+ * (define:vars kullanılmaz — astro check uyumluluğu için).
  */
 interface Props {
   krediTuru: 'ihtiyac' | 'konut' | 'tasit';
@@ -15,18 +18,23 @@ const vergidenMuaf = krediTuru === 'konut';
 const uid = `kh-${krediTuru}`;
 ---
 
-<section aria-label={baslik} class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+<section
+  data-kredi-hesaplayici
+  data-muaf={vergidenMuaf ? 'evet' : 'hayir'}
+  aria-label={baslik}
+  class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
+>
   <h2 class="text-2xl font-bold text-slate-900">{baslik}</h2>
   {aciklama && <p class="mt-2 text-slate-600">{aciklama}</p>}
 
-  <form id={`${uid}-form`} class="mt-6 grid gap-4 sm:grid-cols-3" novalidate>
+  <form data-kh-form class="mt-6 grid gap-4 sm:grid-cols-3" novalidate>
     <div>
       <label for={`${uid}-tutar`} class="block text-sm font-medium text-slate-700">
         Kredi Tutarı (TL)
       </label>
       <input
         id={`${uid}-tutar`}
-        name="tutar"
+        data-kh="tutar"
         type="text"
         inputmode="decimal"
         value="100.000"
@@ -40,7 +48,7 @@ const uid = `kh-${krediTuru}`;
       </label>
       <input
         id={`${uid}-faiz`}
-        name="faiz"
+        data-kh="faiz"
         type="text"
         inputmode="decimal"
         placeholder="Örn. 3,5"
@@ -55,7 +63,7 @@ const uid = `kh-${krediTuru}`;
       </label>
       <input
         id={`${uid}-vade`}
-        name="vade"
+        data-kh="vade"
         type="number"
         min="1"
         max="600"
@@ -76,7 +84,7 @@ const uid = `kh-${krediTuru}`;
             </label>
             <input
               id={`${uid}-kkdf`}
-              name="kkdf"
+              data-kh="kkdf"
               type="text"
               inputmode="decimal"
               value="15"
@@ -89,7 +97,7 @@ const uid = `kh-${krediTuru}`;
             </label>
             <input
               id={`${uid}-bsmv`}
-              name="bsmv"
+              data-kh="bsmv"
               type="text"
               inputmode="decimal"
               value="10"
@@ -119,27 +127,27 @@ const uid = `kh-${krediTuru}`;
         Bu araç güncel faiz oranı sunmaz — oranı bankanızdan öğrenip girin. Sonuçlar
         bilgilendirme amaçlıdır.
       </p>
-      <p id={`${uid}-hata`} role="alert" class="mt-2 hidden text-sm font-medium text-red-600"></p>
+      <p data-kh="hata" role="alert" class="mt-2 hidden text-sm font-medium text-red-600"></p>
     </div>
   </form>
 
-  <div id={`${uid}-sonuc`} class="mt-6 hidden" aria-live="polite">
+  <div data-kh="sonuc" class="mt-6 hidden" aria-live="polite">
     <dl class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       <div class="rounded-xl bg-brand-50 p-4">
         <dt class="text-sm text-slate-600">Aylık Taksit</dt>
-        <dd id={`${uid}-taksit`} class="mt-1 text-2xl font-extrabold text-brand-800">—</dd>
+        <dd data-kh-sonuc="taksit" class="mt-1 text-2xl font-extrabold text-brand-800">—</dd>
       </div>
       <div class="rounded-xl bg-slate-50 p-4">
         <dt class="text-sm text-slate-600">Toplam Geri Ödeme</dt>
-        <dd id={`${uid}-toplam`} class="mt-1 text-xl font-bold text-slate-900">—</dd>
+        <dd data-kh-sonuc="toplam" class="mt-1 text-xl font-bold text-slate-900">—</dd>
       </div>
       <div class="rounded-xl bg-slate-50 p-4">
         <dt class="text-sm text-slate-600">Toplam Faiz</dt>
-        <dd id={`${uid}-faiz-toplam`} class="mt-1 text-xl font-bold text-slate-900">—</dd>
+        <dd data-kh-sonuc="faiz" class="mt-1 text-xl font-bold text-slate-900">—</dd>
       </div>
       <div class="rounded-xl bg-slate-50 p-4">
         <dt class="text-sm text-slate-600">Toplam Vergi (KKDF+BSMV)</dt>
-        <dd id={`${uid}-vergi-toplam`} class="mt-1 text-xl font-bold text-slate-900">—</dd>
+        <dd data-kh-sonuc="vergi" class="mt-1 text-xl font-bold text-slate-900">—</dd>
       </div>
     </dl>
 
@@ -157,14 +165,14 @@ const uid = `kh-${krediTuru}`;
               <th class="px-3 py-2 text-right">Kalan</th>
             </tr>
           </thead>
-          <tbody id={`${uid}-plan`}></tbody>
+          <tbody data-kh="plan"></tbody>
         </table>
       </div>
     </details>
   </div>
 </section>
 
-<script define:vars={{ uid, vergidenMuaf }}>
+<script>
   import { hesaplaKredi, odemePlani, tlBicimle, KrediHesaplamaHatasi } from '../lib/kredi.ts';
 
   /** tr-TR sayı ayrıştırma: "100.000" → 100000, "3,5" → 3.5 */
@@ -175,59 +183,61 @@ const uid = `kh-${krediTuru}`;
     return sayi;
   }
 
-  const form = document.getElementById(`${uid}-form`);
-  const hataEl = document.getElementById(`${uid}-hata`);
-  const sonucEl = document.getElementById(`${uid}-sonuc`);
+  document.querySelectorAll<HTMLElement>('[data-kredi-hesaplayici]').forEach((kok) => {
+    const muaf = kok.dataset.muaf === 'evet';
+    const form = kok.querySelector<HTMLFormElement>('[data-kh-form]');
+    const hataEl = kok.querySelector<HTMLElement>('[data-kh="hata"]');
+    const sonucEl = kok.querySelector<HTMLElement>('[data-kh="sonuc"]');
+    if (!form || !hataEl || !sonucEl) return;
 
-  function deger(id: string): string {
-    const el = document.getElementById(id);
-    return el instanceof HTMLInputElement ? el.value : '';
-  }
+    const girdiAlani = (ad: string): string => {
+      const el = kok.querySelector<HTMLInputElement>(`[data-kh="${ad}"]`);
+      return el ? el.value : '';
+    };
+    const sonucYaz = (ad: string, metin: string): void => {
+      const el = kok.querySelector<HTMLElement>(`[data-kh-sonuc="${ad}"]`);
+      if (el) el.textContent = metin;
+    };
 
-  function metin(id: string, metin: string): void {
-    const el = document.getElementById(id);
-    if (el) el.textContent = metin;
-  }
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      hataEl.classList.add('hidden');
+      try {
+        const girdi = {
+          anapara: sayiParse(girdiAlani('tutar')),
+          aylikFaizOrani: sayiParse(girdiAlani('faiz')),
+          vadeAy: Math.trunc(sayiParse(girdiAlani('vade'))),
+          kkdfOrani: muaf ? 0 : sayiParse(girdiAlani('kkdf')),
+          bsmvOrani: muaf ? 0 : sayiParse(girdiAlani('bsmv')),
+          vergidenMuaf: muaf,
+        };
+        const s = hesaplaKredi(girdi);
+        sonucYaz('taksit', tlBicimle(s.aylikTaksit));
+        sonucYaz('toplam', tlBicimle(s.toplamGeriOdeme));
+        sonucYaz('faiz', tlBicimle(s.toplamFaiz));
+        sonucYaz('vergi', tlBicimle(s.toplamVergi));
 
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    if (!hataEl || !sonucEl) return;
-    hataEl.classList.add('hidden');
-    try {
-      const girdi = {
-        anapara: sayiParse(deger(`${uid}-tutar`)),
-        aylikFaizOrani: sayiParse(deger(`${uid}-faiz`)),
-        vadeAy: Math.trunc(sayiParse(deger(`${uid}-vade`))),
-        kkdfOrani: vergidenMuaf ? 0 : sayiParse(deger(`${uid}-kkdf`)),
-        bsmvOrani: vergidenMuaf ? 0 : sayiParse(deger(`${uid}-bsmv`)),
-        vergidenMuaf,
-      };
-      const s = hesaplaKredi(girdi);
-      metin(`${uid}-taksit`, tlBicimle(s.aylikTaksit));
-      metin(`${uid}-toplam`, tlBicimle(s.toplamGeriOdeme));
-      metin(`${uid}-faiz-toplam`, tlBicimle(s.toplamFaiz));
-      metin(`${uid}-vergi-toplam`, tlBicimle(s.toplamVergi));
-
-      const tbody = document.getElementById(`${uid}-plan`);
-      if (tbody) {
-        tbody.innerHTML = odemePlani(girdi)
-          .map(
-            (satir) =>
-              `<tr class="border-t border-slate-100 odd:bg-white even:bg-slate-50">` +
-              `<td class="px-3 py-1.5">${satir.ay}</td>` +
-              `<td class="px-3 py-1.5 text-right">${tlBicimle(satir.taksit)}</td>` +
-              `<td class="px-3 py-1.5 text-right">${tlBicimle(satir.anapara)}</td>` +
-              `<td class="px-3 py-1.5 text-right">${tlBicimle(satir.faiz)}</td>` +
-              `<td class="px-3 py-1.5 text-right">${tlBicimle(satir.vergi)}</td>` +
-              `<td class="px-3 py-1.5 text-right">${tlBicimle(satir.kalan)}</td></tr>`,
-          )
-          .join('');
+        const tbody = kok.querySelector<HTMLElement>('[data-kh="plan"]');
+        if (tbody) {
+          tbody.innerHTML = odemePlani(girdi)
+            .map(
+              (satir) =>
+                `<tr class="border-t border-slate-100 odd:bg-white even:bg-slate-50">` +
+                `<td class="px-3 py-1.5">${satir.ay}</td>` +
+                `<td class="px-3 py-1.5 text-right">${tlBicimle(satir.taksit)}</td>` +
+                `<td class="px-3 py-1.5 text-right">${tlBicimle(satir.anapara)}</td>` +
+                `<td class="px-3 py-1.5 text-right">${tlBicimle(satir.faiz)}</td>` +
+                `<td class="px-3 py-1.5 text-right">${tlBicimle(satir.vergi)}</td>` +
+                `<td class="px-3 py-1.5 text-right">${tlBicimle(satir.kalan)}</td></tr>`,
+            )
+            .join('');
+        }
+        sonucEl.classList.remove('hidden');
+      } catch (err) {
+        const mesaj = err instanceof KrediHesaplamaHatasi ? err.message : 'Hesaplama sırasında bir hata oluştu.';
+        hataEl.textContent = mesaj;
+        hataEl.classList.remove('hidden');
       }
-      sonucEl.classList.remove('hidden');
-    } catch (err) {
-      const mesaj = err instanceof KrediHesaplamaHatasi ? err.message : 'Hesaplama sırasında bir hata oluştu.';
-      hataEl.textContent = mesaj;
-      hataEl.classList.remove('hidden');
-    }
+    });
   });
 </script>

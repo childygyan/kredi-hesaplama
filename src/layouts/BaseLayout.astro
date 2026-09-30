@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../config/site.ts';
+import ReklamAciklamasi from '../components/ReklamAciklamasi.astro';
 import { canonicalUrl, hreflangLinks, organizationJsonLd, websiteJsonLd } from '../lib/seo.ts';
 import type { PageMeta } from '../lib/seo.ts';
 import '../styles/global.css';
@@ -26,6 +27,13 @@ const ldBlocks = [websiteJsonLd(), organizationJsonLd(), ...jsonLd];
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="tr_TR" />
     <meta property="og:site_name" content={SITE.siteName} />
+    {SITE.adsenseClientId !== '' && (
+      <script
+        async
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${SITE.adsenseClientId}`}
+        crossorigin="anonymous"
+      ></script>
+    )}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -63,6 +71,7 @@ const ldBlocks = [websiteJsonLd(), organizationJsonLd(), ...jsonLd];
           © {new Date().getFullYear()} {SITE.siteName}. Bu sitedeki hesaplamalar bilgilendirme
           amaçlıdır; kredi koşulları bankalara göre değişir.
         </p>
+        <ReklamAciklamasi />
       </div>
     </footer>
   </body>
