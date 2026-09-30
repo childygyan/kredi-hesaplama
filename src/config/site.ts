@@ -8,8 +8,8 @@ export const SITE = {
   siteUrl: 'https://kredihesaplama.cc',
   siteName: 'Kredi Hesaplama',
   locale: 'tr' as const,
-  /** TODO(Firoz): real contact e-mail. */
-  contactEmail: 'info@example.com',
+  /** Contact e-mail (Firoz, 2026-09-30). */
+  contactEmail: 'info@kredihesaplama.cc',
   /**
    * TODO(Firoz): Google AdSense publisher ID, e.g. "ca-pub-1234567890123456".
    * While empty, <AdSlot> renders nothing (no broken ad calls).
