@@ -1,0 +1,38 @@
+{
+  "allowScripts": {
+    "esbuild": true
+  },
+  "dependencies": {
+    "astro": "^5.13.7"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/tailwind": "^6.0.2",
+    "@typescript-eslint/eslint-plugin": "^8.71.0",
+    "@typescript-eslint/parser": "^8.71.0",
+    "eslint": "^10.11.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-astro": "^3.2.1",
+    "prettier": "^3.9.9",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "name": "kredi-hesaplama",
+  "scripts": {
+    "astro": "astro",
+    "build": "astro build",
+    "dev": "astro dev",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "preview": "astro preview",
+    "test": "vitest run",
+    "typecheck": "astro check"
+  },
+  "type": "module",
+  "version": "0.1.0"
+}

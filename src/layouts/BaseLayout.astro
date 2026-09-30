@@ -1,0 +1,69 @@
+---
+import { SITE } from '../config/site.ts';
+import { canonicalUrl, hreflangLinks, organizationJsonLd, websiteJsonLd } from '../lib/seo.ts';
+import type { PageMeta } from '../lib/seo.ts';
+import '../styles/global.css';
+
+interface Props extends PageMeta {}
+
+const { title, description, path, jsonLd = [] } = Astro.props as Props;
+const canonical = canonicalUrl(path);
+const alternates = hreflangLinks(path);
+const ldBlocks = [websiteJsonLd(), organizationJsonLd(), ...jsonLd];
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {alternates.map((a) => (
+      <link rel="alternate" hreflang={a.hreflang} href={a.href} />
+    ))}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:site_name" content={SITE.siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {ldBlocks.map((block) => (
+      <script type="application/ld+json" set:html={JSON.stringify(block)} />
+    ))}
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased">
+    <a
+      href="#icerik"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-brand-700 focus:px-4 focus:py-2 focus:text-white"
+    >
+      İçeriğe atla
+    </a>
+    <header class="border-b border-slate-200 bg-white">
+      <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
+        <a href="/" class="text-xl font-extrabold tracking-tight text-brand-800">
+          {SITE.siteName}
+        </a>
+        <nav aria-label="Ana menü" class="flex gap-4 text-sm font-medium text-slate-600">
+          <a href="/" class="hover:text-brand-700">Ana Sayfa</a>
+        </nav>
+      </div>
+    </header>
+    <main id="icerik" class="mx-auto max-w-5xl px-4 py-10">
+      <slot />
+    </main>
+    <footer class="border-t border-slate-200 bg-white">
+      <div class="mx-auto max-w-5xl px-4 py-8 text-sm text-slate-500">
+        <p>
+          © {new Date().getFullYear()} {SITE.siteName}. Bu sitedeki hesaplamalar bilgilendirme
+          amaçlıdır; kredi koşulları bankalara göre değişir.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

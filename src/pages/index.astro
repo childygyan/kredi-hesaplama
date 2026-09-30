@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Phase 1: foundation homepage. Phase 3 upgrades this page into the full
+// "kredi hesaplama" pillar (calculator above the fold, content + FAQ below).
+---
+
+<BaseLayout
+  title="Kredi Hesaplama | İhtiyaç, Konut ve Taşıt Kredisi Hesaplama Aracı"
+  description="Kredi hesaplama aracıyla ihtiyaç, konut ve taşıt kredilerinizin aylık taksit tutarını ve toplam geri ödeme miktarını saniyeler içinde hesaplayın. Ücretsiz ve kolay."
+  path="/"
+>
+  <section class="text-center">
+    <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+      Kredi Hesaplama
+    </h1>
+    <p class="mx-auto mt-4 max-w-2xl text-lg text-slate-600">
+      İhtiyaç, konut ve taşıt kredilerinizin aylık taksitini ve toplam geri ödeme tutarını
+      saniyeler içinde hesaplayın. Tamamen ücretsiz.
+    </p>
+  </section>
+
+  <section class="mt-12 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm" aria-label="Hesaplama araçları">
+    <h2 class="text-2xl font-bold text-slate-900">Kredi Hesaplama Araçları</h2>
+    <p class="mt-2 text-slate-600">
+      Hesaplama araçlarımız hazırlanıyor. Çok yakında ihtiyaç kredisi, konut kredisi ve
+      taşıt kredisi hesaplama araçları burada olacak.
+    </p>
+  </section>
+</BaseLayout>
