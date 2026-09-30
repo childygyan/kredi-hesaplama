@@ -11,15 +11,15 @@ title + H1, interactive calculator above the fold, supporting content + FAQ belo
 
 ## Pages built (7 total, all in sitemap)
 
-| Page | Target keyword | Calculator |
-|---|---|---|
-| `/` | kredi hesaplama (pillar) | KrediHesaplayici (genel) |
-| `/ihtiyac-kredisi-hesaplama/` | ihtiyaç kredisi hesaplama | ihtiyaç (KKDF+BSMV) |
-| `/konut-kredisi-hesaplama/` | konut kredisi hesaplama | konut (vergiden muaf) |
-| `/tasit-kredisi-hesaplama/` | taşıt kredisi hesaplama | taşıt (KKDF+BSMV) |
-| `/erken-odeme-hesaplama/` | erken ödeme hesaplama | ErkenOdemeHesaplayici |
-| `/yuzde-hesaplama/` | yüzde hesaplama | 3-mode (yüzde/oran/değişim) |
-| `/yas-hesaplama/` | yaş hesaplama | date → yıl/ay/gün |
+| Page                          | Target keyword            | Calculator                  |
+| ----------------------------- | ------------------------- | --------------------------- |
+| `/`                           | kredi hesaplama (pillar)  | KrediHesaplayici (genel)    |
+| `/ihtiyac-kredisi-hesaplama/` | ihtiyaç kredisi hesaplama | ihtiyaç (KKDF+BSMV)         |
+| `/konut-kredisi-hesaplama/`   | konut kredisi hesaplama   | konut (vergiden muaf)       |
+| `/tasit-kredisi-hesaplama/`   | taşıt kredisi hesaplama   | taşıt (KKDF+BSMV)           |
+| `/erken-odeme-hesaplama/`     | erken ödeme hesaplama     | ErkenOdemeHesaplayici       |
+| `/yuzde-hesaplama/`           | yüzde hesaplama           | 3-mode (yüzde/oran/değişim) |
+| `/yas-hesaplama/`             | yaş hesaplama             | date → yıl/ay/gün           |
 
 ## New libs + components
 

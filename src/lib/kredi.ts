@@ -63,7 +63,9 @@ function sayiKontrol(deger: number, ad: string): void {
   }
 }
 
-export function girdiKontrol(g: KrediGirdisi): Required<Omit<KrediGirdisi, 'vergidenMuaf'>> & { vergidenMuaf: boolean } {
+export function girdiKontrol(
+  g: KrediGirdisi,
+): Required<Omit<KrediGirdisi, 'vergidenMuaf'>> & { vergidenMuaf: boolean } {
   sayiKontrol(g.anapara, 'Kredi tutarı');
   sayiKontrol(g.aylikFaizOrani, 'Faiz oranı');
   sayiKontrol(g.vadeAy, 'Vade');
@@ -104,12 +106,14 @@ export function hesaplaKredi(g: KrediGirdisi): KrediSonucu {
   const v = girdiKontrol(g);
   const r = efektifAylikOran(g) / 100;
   const n = v.vadeAy;
-  const taksit = r === 0 ? v.anapara / n : (v.anapara * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+  const taksit =
+    r === 0 ? v.anapara / n : (v.anapara * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
   const toplamGeriOdeme = taksit * n;
   const toplamFaizVergi = toplamGeriOdeme - v.anapara;
   // Faiz/vergi ayrımı: faiz = nominal oran üzerinden, vergi = faiz × (KKDF+BSMV).
   const vergiCarpani = v.vergidenMuaf ? 0 : v.kkdfOrani / 100 + v.bsmvOrani / 100;
-  const toplamVergi = vergiCarpani === 0 ? 0 : toplamFaizVergi * (vergiCarpani / (1 + vergiCarpani));
+  const toplamVergi =
+    vergiCarpani === 0 ? 0 : toplamFaizVergi * (vergiCarpani / (1 + vergiCarpani));
   const toplamFaiz = toplamFaizVergi - toplamVergi;
   return {
     aylikTaksit: taksit,

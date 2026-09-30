@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Sayfa Bulunamadı (404) | Kredi Hesaplama"
+  description="Aradığınız sayfa bulunamadı. Kredi hesaplama araçlarımıza ana sayfadan ulaşabilirsiniz."
+  path="/404/"
+>
+  <section class="py-16 text-center">
+    <p class="text-6xl font-extrabold text-brand-700">404</p>
+    <h1 class="mt-4 text-3xl font-bold text-slate-900">Sayfa Bulunamadı</h1>
+    <p class="mx-auto mt-3 max-w-md text-slate-600">
+      Aradığınız sayfa taşınmış veya hiç var olmamış olabilir. Hesaplayıcılarımıza
+      aşağıdaki bağlantılardan ulaşabilirsiniz.
+    </p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a
+        href="/"
+        class="rounded-lg bg-brand-700 px-6 py-3 font-semibold text-white hover:bg-brand-800"
+      >
+        Kredi Hesaplama
+      </a>
+      <a
+        href="/ihtiyac-kredisi-hesaplama/"
+        class="rounded-lg border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 hover:border-brand-400"
+      >
+        İhtiyaç Kredisi
+      </a>
+      <a
+        href="/konut-kredisi-hesaplama/"
+        class="rounded-lg border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 hover:border-brand-400"
+      >
+        Konut Kredisi
+      </a>
+    </div>
+  </section>
+</BaseLayout>

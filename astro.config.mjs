@@ -8,5 +8,11 @@ import { SITE } from './src/config/site.ts';
 // https://astro.build/config
 export default defineConfig({
   site: SITE.siteUrl,
-  integrations: [tailwind(), sitemap()],
+  integrations: [
+    tailwind(),
+    sitemap({
+      // 404 sayfası arama motorlarında indekslenmemeli
+      filter: (page) => !page.endsWith('/404/'),
+    }),
+  ],
 });

@@ -5,11 +5,11 @@
 
 ## Pages built (3 guides under /rehber/)
 
-| Page | Topic |
-|---|---|
-| `/rehber/kredi-maliyeti-nasil-hesaplanir/` | nominal vs efektif maliyet, vade etkisi, adım adım hesap, örnek (etiketli) |
-| `/rehber/kkdf-bsmv-nedir/` | KKDF/BSMV tanımları, hangi kredilerde alınır, konut muafiyeti, oran güncelliği |
-| `/rehber/erken-odeme-kurallari/` | tam/kısmi erken ödeme, faiz tasarrufu mantığı, ceza (sözleşmeye göre), kontrol listesi |
+| Page                                       | Topic                                                                                  |
+| ------------------------------------------ | -------------------------------------------------------------------------------------- |
+| `/rehber/kredi-maliyeti-nasil-hesaplanir/` | nominal vs efektif maliyet, vade etkisi, adım adım hesap, örnek (etiketli)             |
+| `/rehber/kkdf-bsmv-nedir/`                 | KKDF/BSMV tanımları, hangi kredilerde alınır, konut muafiyeti, oran güncelliği         |
+| `/rehber/erken-odeme-kurallari/`           | tam/kısmi erken ödeme, faiz tasarrufu mantığı, ceza (sözleşmeye göre), kontrol listesi |
 
 Each guide: unique Turkish content (4-6 sections), breadcrumb with exact "Kredi Hesaplama"
 anchor to `/`, FAQ accordion + FAQPage JSON-LD (4-5 Q&A), interlinking between guides

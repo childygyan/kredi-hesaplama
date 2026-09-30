@@ -26,8 +26,6 @@ export function yasHesapla(dogumTarihi: Date, bugun: Date = new Date()): YasSonu
     yil -= 1;
     ay += 12;
   }
-  const toplamGun = Math.floor(
-    (bugun.getTime() - dogumTarihi.getTime()) / (1000 * 60 * 60 * 24),
-  );
+  const toplamGun = Math.floor((bugun.getTime() - dogumTarihi.getTime()) / (1000 * 60 * 60 * 24));
   return { yil, ay, gun, toplamGun };
 }
