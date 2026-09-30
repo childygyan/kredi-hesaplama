@@ -4,8 +4,8 @@
  * domain/DNS, AdSense application, affiliate partnerships.
  */
 export const SITE = {
-  /** TODO(Firoz): production domain — update before launch. */
-  siteUrl: 'https://kredi-hesaplama.example.com',
+  /** Production domain (Firoz, 2026-09-30). */
+  siteUrl: 'https://kredihesaplama.cc',
   siteName: 'Kredi Hesaplama',
   locale: 'tr' as const,
   /** TODO(Firoz): real contact e-mail. */
