@@ -1,0 +1,133 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SssBolumu from '../../components/SssBolumu.astro';
+
+const sorular = [
+  {
+    soru: 'Kredi maliyeti nedir?',
+    cevap:
+      'Kredi maliyeti; çektiğiniz tutarın üzerine ödeyeceğiniz faiz ve vergilerin ' +
+      'toplamıdır. Toplam geri ödeme eksi kredi tutarı, size kredinin gerçek maliyetini verir.',
+  },
+  {
+    soru: 'Nominal faiz ile efektif maliyet arasındaki fark nedir?',
+    cevap:
+      'Nominal faiz, bankanın ilan ettiği orandır. Efektif maliyet ise KKDF ve BSMV gibi ' +
+      'vergiler dahil, cebinizden çıkan gerçek orandır. İhtiyaç ve taşıt kredilerinde ' +
+      'efektif oran nominal orandan yüksektir.',
+  },
+  {
+    soru: 'Vade uzadıkça kredi maliyeti artar mı?',
+    cevap:
+      'Evet. Vade uzadıkça aylık taksit düşer ama faiz daha uzun süre işlediği için toplam ' +
+      'geri ödeme artar. Kredi hesaplama aracımızla farklı vadeleri karşılaştırın.',
+  },
+  {
+    soru: 'İki kredi teklifini nasıl karşılaştırmalıyım?',
+    cevap:
+      'Yalnızca aylık taksite veya nominal orana değil, vergiler dahil toplam geri ödeme ' +
+      'tutarına bakın. Aynı tutar ve vade için toplam geri ödemesi düşük olan teklif, ' +
+      'genellikle daha ucuzdur.',
+  },
+];
+---
+
+<BaseLayout
+  title="Kredi Maliyeti Nasıl Hesaplanır? | Toplam Geri Ödeme Rehberi"
+  description="Kredi maliyeti nasıl hesaplanır? Nominal faiz, efektif maliyet, vade ve vergilerin toplam geri ödemeye etkisini örneklerle öğrenin."
+  path="/rehber/kredi-maliyeti-nasil-hesaplanir/"
+>
+  <nav aria-label="Sayfa içi yol" class="text-sm text-slate-500">
+    <a href="/" class="text-brand-700 hover:underline">Kredi Hesaplama</a>
+    <span aria-hidden="true"> / </span>
+    <span>Rehber</span>
+    <span aria-hidden="true"> / </span>
+    <span>Kredi Maliyeti Nasıl Hesaplanır?</span>
+  </nav>
+
+  <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+    Kredi Maliyeti Nasıl Hesaplanır?
+  </h1>
+  <p class="mt-3 max-w-3xl text-lg text-slate-600">
+    Kredinin size gerçekte ne kadara mal olacağını bulmanın yolu: faiz, vade ve
+    vergileri birlikte hesaplamak.
+  </p>
+
+  <article class="mt-8 max-w-none space-y-6 text-slate-600">
+    <section>
+      <h2 class="text-2xl font-bold text-slate-900">Kredi Maliyetini Oluşturan Kalemler</h2>
+      <p class="mt-3">
+        Bir kredinin maliyeti üç ana kalemden oluşur: <strong>anapara</strong> (çektiğiniz
+        tutar), <strong>faiz</strong> (paranın kullanım bedeli) ve <strong>vergiler</strong>
+        (ihtiyaç ve taşıt kredilerinde faiz üzerinden alınan KKDF ve BSMV). Toplam geri
+        ödeme; bu üç kalemin toplamıdır. Kredi maliyeti ise toplam geri ödemeden anaparanın
+        çıkarılmasıyla bulunur:
+      </p>
+      <p class="rounded-lg bg-slate-50 p-4 font-medium text-slate-800">
+        Kredi maliyeti = Toplam geri ödeme − Kredi tutarı
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-bold text-slate-900">Nominal Faiz ile Efektif Maliyet Farkı</h2>
+      <p class="mt-3">
+        Bankaların ilan ettiği oran <strong>nominal faiz</strong>dir; ancak cebinizden
+        çıkan gerçek oran çoğu zaman daha yüksektir. İhtiyaç ve taşıt kredilerinde faiz
+        üzerinden KKDF ve BSMV alındığı için <strong>efektif maliyet</strong>, nominal
+        oranın üzerine çıkar. Örneğin aylık %3 nominal oranlı bir ihtiyaç kredisinde,
+        vergiler dahil efektif oran %3,75 civarına gelir (varsayılan %15 KKDF + %10 BSMV
+        ile hesaplanan örnektir; güncel oranları bankanızdan teyit edin).
+      </p>
+      <p>
+        Konut kredileri bu vergilerden muaf olduğu için aynı nominal oranda daha düşük
+        efektif maliyete sahiptir. Teklifleri karşılaştırırken nominal orana değil,
+        vergiler dahil toplam geri ödemeye bakın.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-bold text-slate-900">Vadenin Toplam Maliyete Etkisi</h2>
+      <p class="mt-3">
+        Vade, kredi maliyetini en çok etkileyen faktörlerden biridir. Vade uzadıkça aylık
+        taksit düşer — bu, bütçeyi rahatlatır. Ancak faiz daha uzun süre işlediği için
+        toplam geri ödeme artar. Kısa vadede ise tablo tersine döner: yüksek taksit,
+        düşük toplam maliyet.
+      </p>
+      <p>
+        <strong>Örnek:</strong> 100.000 TL tutarında, aylık %3 faizli bir ihtiyaç
+        kredisinde 12 ay vade ile 24 ay vadeyi karşılaştırdığınızda; 24 ay vadede aylık
+        taksit belirgin şekilde düşerken, toplam geri ödeme artar (örnek amaçlı
+        hesaplama; kendi tutarınız için{' '}
+        <a href="/" class="text-brand-700 hover:underline">kredi hesaplama</a> aracını
+        kullanın). Doğru vade, taksitleri rahatça ödeyebildiğiniz en kısa vade
+        dengesidir.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-bold text-slate-900">Adım Adım Kredi Maliyeti Hesabı</h2>
+      <ol class="mt-3 list-decimal space-y-2 pl-5">
+        <li>Bankanın size verdiği <strong>aylık</strong> faiz oranını öğrenin.</li>
+        <li>Kredi tutarını ve vadeyi (ay olarak) belirleyin.</li>
+        <li>
+          Tutar, oran ve vadeyi <a href="/" class="text-brand-700 hover:underline">kredi hesaplama</a>{' '}
+          aracına girin.
+        </li>
+        <li>Toplam geri ödeme tutarından kredi tutarını çıkarın — sonuç, kredi maliyetinizdir.</li>
+        <li>Farklı vade ve oranlarla deneme yaparak size uygun seçeneği bulun.</li>
+      </ol>
+    </section>
+
+    <section aria-label="İlgili sayfalar">
+      <h2 class="text-xl font-bold text-slate-900">İlgili Hesaplayıcılar ve Rehberler</h2>
+      <ul class="mt-3 list-disc space-y-1 pl-5 text-brand-700">
+        <li><a href="/ihtiyac-kredisi-hesaplama/" class="hover:underline">İhtiyaç Kredisi Hesaplama</a></li>
+        <li><a href="/konut-kredisi-hesaplama/" class="hover:underline">Konut Kredisi Hesaplama</a></li>
+        <li><a href="/rehber/kkdf-bsmv-nedir/" class="hover:underline">KKDF ve BSMV Nedir?</a></li>
+        <li><a href="/rehber/erken-odeme-kurallari/" class="hover:underline">Kredide Erken Ödeme Kuralları</a></li>
+      </ul>
+    </section>
+  </article>
+
+  <SssBolumu sorular={sorular} />
+</BaseLayout>

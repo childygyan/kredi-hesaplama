@@ -1,0 +1,133 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SssBolumu from '../../components/SssBolumu.astro';
+
+const sorular = [
+  {
+    soru: 'Kredimi vadesinden önce kapatabilir miyim?',
+    cevap:
+      'Evet. Kredi sözleşmelerinde genellikle erken kapatma hakkı bulunur. Erken ' +
+      'kapatmada ödenmemiş taksitlerin faizi işlemez; yalnızca kalan anapara ve varsa ' +
+      'sözleşmedeki erken kapatma cezası ödenir.',
+  },
+  {
+    soru: 'Erken ödeme ile ne kadar faizden kurtulurum?',
+    cevap:
+      'Tasarruf; kalan vadeye, faiz oranına ve kalan anaparaya göre değişir. Vade ne kadar ' +
+      'uzunsa ve faiz ne kadar yüksekse tasarruf o kadar büyük olur. Erken Ödeme ' +
+      'Hesaplama aracımızla kendi krediniz için hesaplayın.',
+  },
+  {
+    soru: 'Erken kapatma cezası ne kadar?',
+    cevap:
+      'Ceza oranı bankadan bankaya ve sözleşmeden sözleşmeye değişir; bu site yasal bir ' +
+      'üst sınır veya güncel oran iddia etmez. Oranı kredi sözleşmenizden öğrenin ve ' +
+      'hesaplayıcıya girin.',
+  },
+  {
+    soru: 'Kısmi erken ödeme (ara ödeme) yapabilir miyim?',
+    cevap:
+      'Birçok sözleşme ara ödemeye izin verir. Ara ödeme, kalan anaparayı düşürdüğü için ' +
+      'sonraki taksitlerin faiz yükünü azaltır. Koşullar sözleşmenize göre değişir.',
+  },
+  {
+    soru: 'Erken ödeme her zaman mantıklı mı?',
+    cevap:
+      'Genellikle evet, özellikle vadenin başlarındaysanız. Ancak ceza oranı yüksekse ve ' +
+      'vadeye az kalmışsa tasarruf sınırlı olabilir. Karar vermeden önce hesaplayıcıyla ' +
+      'kendi durumunuzu hesaplayın.',
+  },
+];
+---
+
+<BaseLayout
+  title="Kredide Erken Ödeme Kuralları | Erken Kapatma Rehberi"
+  description="Kredide erken ödeme nasıl yapılır? Erken kapatma cezası, faiz tasarrufu ve dikkat edilecekler hakkında rehber."
+  path="/rehber/erken-odeme-kurallari/"
+>
+  <nav aria-label="Sayfa içi yol" class="text-sm text-slate-500">
+    <a href="/" class="text-brand-700 hover:underline">Kredi Hesaplama</a>
+    <span aria-hidden="true"> / </span>
+    <span>Rehber</span>
+    <span aria-hidden="true"> / </span>
+    <span>Kredide Erken Ödeme Kuralları</span>
+  </nav>
+
+  <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+    Kredide Erken Ödeme Kuralları
+  </h1>
+  <p class="mt-3 max-w-3xl text-lg text-slate-600">
+    Kredinizi erken kapatmanın kuralları, maliyeti ve size sağlayacağı tasarruf.
+  </p>
+
+  <article class="mt-8 max-w-none space-y-6 text-slate-600">
+    <section>
+      <h2 class="text-2xl font-bold text-slate-900">Erken Ödeme Nedir?</h2>
+      <p class="mt-3">
+        Erken ödeme; kredinizi vadesi dolmadan kapatmanız veya vade içinde ek ödeme
+        yapmanızdır. İki türü vardır: <strong>tam kapatma</strong> (kalan borcun tamamını
+        ödeyip krediyi bitirme) ve <strong>kısmi ödeme / ara ödeme</strong> (kalan
+        anaparayı azaltan ek ödeme). Her ikisinde de temel mantık aynıdır: ödenmemiş
+        taksitlerin faizi işlemez.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-bold text-slate-900">Faiz Tasarrufu Nasıl Oluşur?</h2>
+      <p class="mt-3">
+        Eşit taksitli kredilerde her taksit; anapara, faiz ve vergiden oluşur. Vadenin
+        ilk aylarında taksitin büyük kısmı faizdir. Krediyi erken kapattığınızda, gelecek
+        aylarda işleyecek faiz ve vergiler ortadan kalkar — yalnızca kalan anapara
+        ödenir. Bu yüzden <strong>vadenin başlarında</strong> yapılan erken kapatma, en
+        büyük tasarrufu sağlar; vadeye birkaç ay kala kapatmanın tasarrufu sınırlıdır.
+      </p>
+      <p>
+        <strong>Örnek:</strong> 24 ay vadeli bir kredinin 12. ayında kapatma yaparsanız,
+        kalan 12 taksitin faiz ve vergi kısmından kurtulursunuz (örnek amaçlı genel
+        bilgi). Tam tutarı <a href="/erken-odeme-hesaplama/" class="text-brand-700 hover:underline">erken ödeme hesaplama</a>{' '}
+        aracıyla bulabilirsiniz.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-bold text-slate-900">Erken Kapatma Cezası</h2>
+      <p class="mt-3">
+        Bazı kredi sözleşmelerinde, erken kapatma durumunda kalan anaparanın belli bir
+        yüzdesi kadar <strong>erken kapatma cezası</strong> öngörülür. Ceza oranı;
+        bankaya, kredi türüne ve sözleşmenize göre değişir. Bu site, ceza oranları
+        hakkında yasal bir üst sınır veya güncel oran <strong>iddia etmez</strong> —
+        oranı mutlaka kendi kredi sözleşmenizden öğrenin. Hesaplayıcımızda ceza oranını
+        kendiniz girebilirsiniz (bilmiyorsanız 0 bırakın).
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-bold text-slate-900">Erken Ödeme Öncesi Kontrol Listesi</h2>
+      <ol class="mt-3 list-decimal space-y-2 pl-5">
+        <li>Sözleşmenizdeki erken kapatma cezası oranını öğrenin.</li>
+        <li>
+          <a href="/erken-odeme-hesaplama/" class="text-brand-700 hover:underline">Erken ödeme hesaplama</a>{' '}
+          aracıyla kalan borcunuzu ve tasarrufunuzu hesaplayın.
+        </li>
+        <li>Cezayı düştükten sonra net tasarrufun pozitif olduğunu doğrulayın.</li>
+        <li>
+          Kısmi ödeme yapacaksanız, ödemenin anaparadan düşeceğini bankanıza yazılı
+          olarak teyit edin.
+        </li>
+        <li>Kapatma sonrası borcu yoktur yazısı / dekont alın.</li>
+      </ol>
+    </section>
+
+    <section aria-label="İlgili sayfalar">
+      <h2 class="text-xl font-bold text-slate-900">İlgili Sayfalar</h2>
+      <ul class="mt-3 list-disc space-y-1 pl-5 text-brand-700">
+        <li><a href="/erken-odeme-hesaplama/" class="hover:underline">Erken Ödeme Hesaplama</a></li>
+        <li><a href="/" class="hover:underline">Kredi Hesaplama</a></li>
+        <li><a href="/rehber/kredi-maliyeti-nasil-hesaplanir/" class="hover:underline">Kredi Maliyeti Nasıl Hesaplanır?</a></li>
+        <li><a href="/rehber/kkdf-bsmv-nedir/" class="hover:underline">KKDF ve BSMV Nedir?</a></li>
+      </ul>
+    </section>
+  </article>
+
+  <SssBolumu sorular={sorular} />
+</BaseLayout>

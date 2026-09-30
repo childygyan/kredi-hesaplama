@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SssBolumu from '../../components/SssBolumu.astro';
+
+const sorular = [
+  {
+    soru: 'KKDF nedir?',
+    cevap:
+      'KKDF (Kaynak Kullanımını Destekleme Fonu), tüketici kredilerinde faiz tutarı ' +
+      'üzerinden alınan bir fondur. Kredi taksitlerinizin içindeki faiz payına eklenir.',
+  },
+  {
+    soru: 'BSMV nedir?',
+    cevap:
+      'BSMV (Banka ve Sigorta Muameleleri Vergisi), banka işlemlerinde faiz üzerinden ' +
+      'alınan bir vergidir. İhtiyaç ve taşıt gibi tüketici kredilerinde uygulanır.',
+  },
+  {
+    soru: 'Konut kredisinde KKDF ve BSMV var mı?',
+    cevap:
+      'Hayır. Konut kredileri KKDF ve BSMV’den muaftır. Bu yüzden aynı nominal faiz ' +
+      'oranında konut kredisinin efektif maliyeti daha düşüktür.',
+  },
+  {
+    soru: 'KKDF ve BSMV oranları değişir mi?',
+    cevap:
+      'Evet, oranlar zaman içinde değişebilir. Hesaplayıcımızda varsayılan olarak %15 ' +
+      'KKDF ve %10 BSMV kullanılır; ancak bunlar varsayılan değerlerdir. Güncel oranları ' +
+      'bankanızdan teyit edin ve dilerseniz araçtaki oranları güncelleyin.',
+  },
+  {
+    soru: 'Vergiler aylık taksiti nasıl etkiler?',
+    cevap:
+      'Vergiler faizin üzerine eklendiği için efektif faiz oranı yükselir ve aylık taksit ' +
+      'artar. Örneğin aylık %3 nominal oran, vergiler dahil yaklaşık %3,75 efektif orana ' +
+      'denk gelir (varsayılan oranlarla örnek hesaplama).',
+  },
+];
+---
+
+<BaseLayout
+  title="KKDF ve BSMV Nedir? | Kredi Vergileri Rehberi"
+  description="KKDF ve BSMV nedir, hangi kredilerde alınır, konut kredisi neden muaf? Kredi vergilerinin taksitinize etkisini öğrenin."
+  path="/rehber/kkdf-bsmv-nedir/"
+>
+  <nav aria-label="Sayfa içi yol" class="text-sm text-slate-500">
+    <a href="/" class="text-brand-700 hover:underline">Kredi Hesaplama</a>
+    <span aria-hidden="true"> / </span>
+    <span>Rehber</span>
+    <span aria-hidden="true"> / </span>
+    <span>KKDF ve BSMV Nedir?</span>
+  </nav>
+
+  <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+    KKDF ve BSMV Nedir?
+  </h1>
+  <p class="mt-3 max-w-3xl text-lg text-slate-600">
+    Kredi faizinin üzerine eklenen bu iki kalem, kredinizin gerçek maliyetini belirler.
+  </p>
+
+  <article class="mt-8 max-w-none space-y-6 text-slate-600">
+    <section>
+      <h2 class="text-2xl font-bold text-slate-900">KKDF Nedir?</h2>
+      <p class="mt-3">
+        <strong>KKDF</strong> (Kaynak Kullanımını Destekleme Fonu), tüketici kredilerinde
+        faiz tutarı üzerinden alınan bir fondur. Her ay ödediğiniz taksitin içindeki faiz
+        payına, belli bir oranda KKDF eklenir. Bu tutar bankaya değil, fona aktarılır;
+        ancak maliyeti siz ödersiniz.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-bold text-slate-900">BSMV Nedir?</h2>
+      <p class="mt-3">
+        <strong>BSMV</strong> (Banka ve Sigorta Muameleleri Vergisi), bankacılık
+        işlemlerinde faiz üzerinden alınan bir vergidir. KKDF gibi, taksitlerinizdeki
+        faiz payı üzerinden hesaplanır ve aylık ödemenize eklenir.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-bold text-slate-900">Hangi Kredilerde Alınır?</h2>
+      <p class="mt-3">
+        KKDF ve BSMV; <strong>ihtiyaç kredisi</strong> ve <strong>taşıt kredisi</strong>
+        gibi tüketici kredilerinde faiz üzerinden alınır. Buna karşılık{' '}
+        <strong>konut kredileri</strong> bu iki kalemden <strong>muaftır</strong> — konut
+        kredisinde yalnızca faiz ödersiniz. Bu muafiyet, aynı nominal faiz oranında
+        konut kredisini daha avantajlı kılar.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-bold text-slate-900">Oranlar ve Güncellik</h2>
+      <p class="mt-3">
+        KKDF ve BSMV oranları zaman içinde değişebilir; bu yüzden "güncel oran" diye tek
+        bir doğru yoktur. Sitemizdeki hesaplayıcılarda varsayılan olarak{' '}
+        <strong>%15 KKDF</strong> ve <strong>%10 BSMV</strong> kullanılır — bunlar
+        yalnızca başlangıç değerleridir, güncel oran iddiası değildir. Bankanız size
+        farklı oranlar uyguluyorsa, hesaplayıcının "Vergi oranları" bölümünden
+        güncelleyebilirsiniz. En sağlıklısı, güncel oranları doğrudan bankanızdan teyit
+        etmektir.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-bold text-slate-900">Efektif Orana Etkisi (Örnek)</h2>
+      <p class="mt-3">
+        Vergilerin etkisi sanıldığından büyüktür. <strong>Örnek:</strong> aylık %3 nominal
+        faizli bir ihtiyaç kredisinde, varsayılan vergi oranlarıyla efektif oran yaklaşık
+        %3,75’e çıkar. Yani 100.000 TL’lik 12 ay vadeli bir kredide, vergiler toplam
+        geri ödemeye on binlerce lira ekleyebilir (örnek amaçlı hesaplama). Kendi
+        kredinizin vergi dahil maliyetini görmek için{' '}
+        <a href="/ihtiyac-kredisi-hesaplama/" class="text-brand-700 hover:underline">ihtiyaç kredisi hesaplama</a>{' '}
+        aracını kullanın.
+      </p>
+    </section>
+
+    <section aria-label="İlgili sayfalar">
+      <h2 class="text-xl font-bold text-slate-900">İlgili Sayfalar</h2>
+      <ul class="mt-3 list-disc space-y-1 pl-5 text-brand-700">
+        <li><a href="/" class="hover:underline">Kredi Hesaplama</a></li>
+        <li><a href="/rehber/kredi-maliyeti-nasil-hesaplanir/" class="hover:underline">Kredi Maliyeti Nasıl Hesaplanır?</a></li>
+        <li><a href="/rehber/erken-odeme-kurallari/" class="hover:underline">Kredide Erken Ödeme Kuralları</a></li>
+        <li><a href="/konut-kredisi-hesaplama/" class="hover:underline">Konut Kredisi Hesaplama</a></li>
+      </ul>
+    </section>
+  </article>
+
+  <SssBolumu sorular={sorular} />
+</BaseLayout>
