@@ -1,0 +1,39 @@
+# Kredi Hesaplama
+
+> Free Turkish-language loan calculators: monthly installment, total repayment, and full amortization schedules for personal, mortgage, and auto loans. No sign-up, no account. All calculations run in the visitor's browser.
+
+Kredi Hesaplama (https://kredihesaplama.cc/) helps users in Turkey estimate what a loan costs before borrowing: monthly payment (aylık taksit) and total repayment (toplam geri ödeme) for ihtiyaç kredisi (personal loan), konut kredisi (mortgage), and taşıt kredisi (auto loan), plus early-repayment (erken ödeme) savings. Interest rates are entered by the user; the site does not publish or claim live bank rates. Example values are always labeled as examples (örnek).
+
+## Main calculators
+
+- [Kredi Hesaplama](https://kredihesaplama.cc/): the main loan calculator — amount, monthly interest rate, term in months, KKDF/BSMV tax handling, full amortization schedule.
+- [İhtiyaç Kredisi Hesaplama](https://kredihesaplama.cc/ihtiyac-kredisi-hesaplama/): personal loan calculator.
+- [Konut Kredisi Hesaplama](https://kredihesaplama.cc/konut-kredisi-hesaplama/): mortgage calculator (KKDF/BSMV exempt for housing loans).
+- [Taşıt Kredisi Hesaplama](https://kredihesaplama.cc/tasit-kredisi-hesaplama/): auto loan calculator.
+- [Erken Ödeme Hesaplama](https://kredihesaplama.cc/erken-odeme-hesaplama/): early-repayment savings calculator.
+- [Yüzde Hesaplama](https://kredihesaplama.cc/yuzde-hesaplama/): percentage calculator.
+- [Yaş Hesaplama](https://kredihesaplama.cc/yas-hesaplama/): age calculator.
+
+## Guides (rehber)
+
+- [Kredi Maliyeti Nasıl Hesaplanır](https://kredihesaplama.cc/rehber/kredi-maliyeti-nasil-hesaplanir/): how loan cost is calculated.
+- [KKDF ve BSMV Nedir](https://kredihesaplama.cc/rehber/kkdf-bsmv-nedir/): the KKDF/BSMV taxes applied to loan interest in Turkey.
+- [Erken Ödeme Kuralları](https://kredihesaplama.cc/rehber/erken-odeme-kurallari/): early-repayment rules.
+
+## Legal and contact
+
+- [Hakkımızda (About)](https://kredihesaplama.cc/hakkimizda/): built by Firoz Khan (FK Digital Media).
+- [Gizlilik Politikası (Privacy Policy)](https://kredihesaplama.cc/gizlilik-politikasi/): calculations run in the browser; no personal data is collected; cookie/advertising disclosure for when ads are enabled.
+- [Kullanım Şartları (Terms of Service)](https://kredihesaplama.cc/kullanim-sartlari/): informational tool only, not financial advice; no warranties.
+- [İletişim (Contact)](https://kredihesaplama.cc/iletisim/): info@kredihesaplama.cc and public profiles.
+
+## Language
+
+The entire site is in Turkish (tr). There are no other language versions.
+
+## Technical notes for crawlers and LLMs
+
+- Static site; all content is server-rendered HTML.
+- Canonical URLs use https://kredihesaplama.cc/.
+- Sitemap: https://kredihesaplama.cc/sitemap-index.xml
+- Calculations are estimates for information only and are not financial advice; final loan terms always come from the user's bank.
