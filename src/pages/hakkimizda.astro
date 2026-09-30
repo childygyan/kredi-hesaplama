@@ -20,11 +20,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <article class="mt-8 max-w-none space-y-6 text-slate-600">
     <section>
       <h2 class="text-2xl font-bold text-slate-900">Biz Kimiz?</h2>
-      <p class="mt-3">
-        Kredi Hesaplama, bağımsız üretici <strong>Firoz Khan</strong> tarafından hazırlanan
-        ücretsiz bir araçtır. Firoz, <strong>FK Digital Media</strong> çatısı altında herkesin
-        kolayca kullanabileceği ücretsiz hesaplama araçları geliştirir.
-      </p>
+      <div class="mt-4 flex flex-col items-start gap-6 sm:flex-row sm:items-center">
+        <img
+          src="/images/firoz-khan.webp"
+          alt="Firoz Khan"
+          width="160"
+          height="160"
+          loading="lazy"
+          class="h-40 w-40 shrink-0 rounded-2xl object-cover shadow-md"
+        />
+        <div>
+          <p class="text-lg font-bold text-slate-900">Firoz Khan</p>
+          <p class="text-sm text-slate-500">FK Digital Media</p>
+          <p class="mt-2">
+            Kredi Hesaplama, bağımsız üretici <strong>Firoz Khan</strong> tarafından hazırlanan
+            ücretsiz bir araçtır. Firoz, <strong>FK Digital Media</strong> çatısı altında herkesin
+            kolayca kullanabileceği ücretsiz hesaplama araçları geliştirir.
+          </p>
+        </div>
+      </div>
     </section>
 
     <section>
