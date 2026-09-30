@@ -67,6 +67,12 @@ const ldBlocks = [websiteJsonLd(), organizationJsonLd(), ...jsonLd];
     </main>
     <footer class="border-t border-slate-200 bg-white">
       <div class="mx-auto max-w-5xl px-4 py-8 text-sm text-slate-500">
+        <nav aria-label="Bilgi sayfaları" class="mb-4 flex flex-wrap gap-x-5 gap-y-2">
+          <a href="/hakkimizda/" class="hover:text-brand-700">Hakkımızda</a>
+          <a href="/iletisim/" class="hover:text-brand-700">İletişim</a>
+          <a href="/gizlilik-politikasi/" class="hover:text-brand-700">Gizlilik Politikası</a>
+          <a href="/kullanim-sartlari/" class="hover:text-brand-700">Kullanım Şartları</a>
+        </nav>
         <p>
           © {new Date().getFullYear()} {SITE.siteName}. Bu sitedeki hesaplamalar bilgilendirme
           amaçlıdır; kredi koşulları bankalara göre değişir.

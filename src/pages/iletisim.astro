@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../config/site.ts';
+---
+
+<BaseLayout
+  title="İletişim | Kredi Hesaplama"
+  description="Kredi Hesaplama ile iletişime geçin: soru, öneri ve hata bildirimleri için e-posta adresimiz."
+  path="/iletisim/"
+>
+  <nav aria-label="Sayfa içi yol" class="text-sm text-slate-500">
+    <a href="/" class="text-brand-700 hover:underline">Kredi Hesaplama</a>
+    <span aria-hidden="true"> / </span>
+    <span>İletişim</span>
+  </nav>
+
+  <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+    İletişim
+  </h1>
+
+  <article class="mt-8 max-w-none space-y-6 text-slate-600">
+    <section>
+      <h2 class="text-2xl font-bold text-slate-900">Bize Ulaşın</h2>
+      <p class="mt-3">
+        Sorularınız, önerileriniz veya fark ettiğiniz bir hata için e-posta
+        gönderebilirsiniz:
+      </p>
+      <p class="mt-4">
+        <a
+          href={`mailto:${SITE.contactEmail}`}
+          class="inline-block rounded-lg bg-brand-700 px-6 py-3 font-semibold text-white hover:bg-brand-800"
+        >
+          {SITE.contactEmail}
+        </a>
+      </p>
+      <p class="mt-3 text-sm text-slate-500">
+        Not: Bu adres alan adı seçimi tamamlanana kadar geçicidir; yakında güncellenecektir.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-bold text-slate-900">Sosyal Medya</h2>
+      <ul class="mt-3 flex flex-wrap gap-x-6 gap-y-2">
+        <li>
+          <a href="https://www.linkedin.com/in/firoz-khan-1153358a/" class="text-brand-700 hover:underline">LinkedIn</a>
+        </li>
+        <li>
+          <a href="https://github.com/fkdigitalmedia" class="text-brand-700 hover:underline">GitHub</a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/rtibyfiroz/" class="text-brand-700 hover:underline">Instagram</a>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-bold text-slate-900">Ne Zaman Yazmalısınız?</h2>
+      <ul class="mt-3 list-disc space-y-2 pl-5">
+        <li>Hesaplayıcılarda gördüğünüz bir hata veya tutarsızlık,</li>
+        <li>Eklenmesini istediğiniz yeni bir hesaplama aracı,</li>
+        <li>İçerikle ilgili düzeltme önerileri.</li>
+      </ul>
+      <p class="mt-3">
+        Kredi başvurusu, faiz oranı teklifi veya bankacılık işlemleriyle ilgili talepler
+        için lütfen doğrudan bankanızla iletişime geçin; bu site banka değildir ve kredi
+        vermez.
+      </p>
+    </section>
+  </article>
+</BaseLayout>
