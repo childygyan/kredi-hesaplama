@@ -1,0 +1,134 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SssBolumu from '../components/SssBolumu.astro';
+
+const sorular = [
+  {
+    soru: 'Yaş hesaplama nasıl yapılır?',
+    cevap:
+      'Doğum tarihinizi gün, ay ve yıl olarak girin. Araç; bugünün tarihine göre tam ' +
+      'yaşınızı yıl, ay ve gün olarak hesaplar.',
+  },
+  {
+    soru: 'Sonuç neden bazen bir gün farklı çıkar?',
+    cevap:
+      'Ay uzunlukları ve artık yıllar nedeniyle gün hesabı takvime göre yapılır. Bu araç ' +
+      'gerçek takvim matematiği kullanır; artık yıl günleri dahildir.',
+  },
+  {
+    soru: 'Gelecek bir tarihte kaç yaşında olacağımı hesaplayabilir miyim?',
+    cevap:
+      'Bu araç bugüne göre yaş hesaplar. Belirli bir tarihteki yaş için o tarihi “bugün” ' +
+      'kabul edip manuel karşılaştırma yapabilirsiniz.',
+  },
+];
+---
+
+<BaseLayout
+  title="Yaş Hesaplama | Doğum Tarihinden Yaş Hesaplama Aracı"
+  description="Yaş hesaplama aracıyla doğum tarihinizden tam yaşınızı yıl, ay ve gün olarak öğrenin. Ücretsiz ve hızlı."
+  path="/yas-hesaplama/"
+>
+  <nav aria-label="Sayfa içi yol" class="text-sm text-slate-500">
+    <a href="/" class="text-brand-700 hover:underline">Kredi Hesaplama</a>
+    <span aria-hidden="true"> / </span>
+    <span>Yaş Hesaplama</span>
+  </nav>
+
+  <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+    Yaş Hesaplama
+  </h1>
+  <p class="mt-3 max-w-3xl text-lg text-slate-600">
+    Doğum tarihinizi girin; tam yaşınızı yıl, ay ve gün olarak hesaplayalım.
+  </p>
+
+  <section aria-label="Yaş hesaplama aracı" class="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+    <form id="ysh-form" class="grid gap-4 sm:grid-cols-4" novalidate>
+      <div>
+        <label for="ysh-gun" class="block text-sm font-medium text-slate-700">Gün</label>
+        <input id="ysh-gun" type="number" min="1" max="31" value="15" required
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-100" />
+      </div>
+      <div>
+        <label for="ysh-ay" class="block text-sm font-medium text-slate-700">Ay</label>
+        <input id="ysh-ay" type="number" min="1" max="12" value="6" required
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-100" />
+      </div>
+      <div>
+        <label for="ysh-yil" class="block text-sm font-medium text-slate-700">Yıl</label>
+        <input id="ysh-yil" type="number" min="1900" max="2026" value="1990" required
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-100" />
+      </div>
+      <div class="flex items-end">
+        <button type="submit"
+          class="w-full rounded-lg bg-brand-700 px-6 py-2 font-semibold text-white hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-300">
+          Hesapla
+        </button>
+      </div>
+    </form>
+    <p id="ysh-hata" role="alert" class="mt-3 hidden text-sm font-medium text-red-600"></p>
+    <div id="ysh-sonuc" class="mt-6 hidden" aria-live="polite">
+      <p class="text-2xl font-extrabold text-brand-800"><output id="ysh-yas">—</output></p>
+      <p class="mt-1 text-slate-600"><output id="ysh-gun-sayisi">—</output></p>
+    </div>
+  </section>
+
+  <section class="mt-12" aria-label="Yaş hesaplama hakkında">
+    <h2 class="text-2xl font-bold text-slate-900">Yaş Hesaplama Hakkında</h2>
+    <div class="mt-4 max-w-none space-y-4 text-slate-600">
+      <p>
+        Yaş hesaplama; doğum tarihi ile bugünün tarihi arasındaki farkın yıl, ay ve gün
+        olarak bulunmasıdır. Ayların farklı uzunlukta olması ve artık yıllar nedeniyle
+        bu hesap göründüğünden biraz daha inceliklidir; aracımız gerçek takvim
+        matematiği kullanır.
+      </p>
+      <p>
+        Finansal planlamada yaş, vade seçiminde rol oynayabilir: örneğin uzun vadeli
+        bir konut kredisinde vade sonundaki yaşınız, ödeme planınızı değerlendirirken
+        dikkate alınabilir. Kredi planlaması için{' '}
+        <a href="/" class="text-brand-700 hover:underline">kredi hesaplama</a> aracımıza
+        göz atabilirsiniz.
+      </p>
+    </div>
+  </section>
+
+  <SssBolumu sorular={sorular} />
+<script>
+  import { yasHesapla } from '../lib/yas.ts';
+
+  const form = document.getElementById('ysh-form');
+  const hataEl = document.getElementById('ysh-hata');
+  const sonucEl = document.getElementById('ysh-sonuc');
+
+  function sayi(id: string): number {
+    const el = document.getElementById(id);
+    return el instanceof HTMLInputElement ? Number(el.value) : Number.NaN;
+  }
+  function out(id: string, metin: string): void {
+    const el = document.getElementById(id);
+    if (el) el.textContent = metin;
+  }
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!hataEl || !sonucEl) return;
+    hataEl.classList.add('hidden');
+    try {
+      const dogum = new Date(sayi('ysh-yil'), sayi('ysh-ay') - 1, sayi('ysh-gun'));
+      if (
+        dogum.getDate() !== sayi('ysh-gun') ||
+        dogum.getMonth() !== sayi('ysh-ay') - 1
+      ) {
+        throw new Error('Geçerli bir tarih girin (örn. 30 Şubat geçersizdir).');
+      }
+      const s = yasHesapla(dogum);
+      out('ysh-yas', `${s.yil} yıl, ${s.ay} ay, ${s.gun} gün`);
+      out('ysh-gun-sayisi', `Toplam ${s.toplamGun.toLocaleString('tr-TR')} gündür hayattasınız.`);
+      sonucEl.classList.remove('hidden');
+    } catch (err) {
+      hataEl.textContent = err instanceof Error ? err.message : 'Hesaplama hatası.';
+      hataEl.classList.remove('hidden');
+    }
+  });
+</script>
+</BaseLayout>

@@ -1,0 +1,130 @@
+---
+/**
+ * ErkenOdemeHesaplayici — erken kapatma / erken ödeme hesaplayıcı.
+ * Ceza oranı kullanıcıdan alınır (varsayılan %0); yasal üst sınır iddia edilmez.
+ */
+const uid = 'eoh';
+---
+
+<section aria-label="Erken ödeme hesaplama" class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+  <h2 class="text-2xl font-bold text-slate-900">Erken Ödeme Hesaplama</h2>
+  <p class="mt-2 text-slate-600">
+    Kredinizi vadesinden önce kapatırsanız ne kadar faizden kurtulacağınızı hesaplayın.
+  </p>
+
+  <form id={`${uid}-form`} class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" novalidate>
+    <div>
+      <label for={`${uid}-tutar`} class="block text-sm font-medium text-slate-700">Kredi Tutarı (TL)</label>
+      <input id={`${uid}-tutar`} type="text" inputmode="decimal" value="200.000"
+        class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-100" />
+      <p class="mt-1 text-xs text-slate-400">Örnek değer.</p>
+    </div>
+    <div>
+      <label for={`${uid}-faiz`} class="block text-sm font-medium text-slate-700">Aylık Faiz Oranı (%)</label>
+      <input id={`${uid}-faiz`} type="text" inputmode="decimal" placeholder="Örn. 3,5" required
+        class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-100" />
+      <p class="mt-1 text-xs text-slate-400">Bankanızın verdiği oranı girin.</p>
+    </div>
+    <div>
+      <label for={`${uid}-vade`} class="block text-sm font-medium text-slate-700">Vade (Ay)</label>
+      <input id={`${uid}-vade`} type="number" min="1" max="600" value="24"
+        class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-100" />
+    </div>
+    <div>
+      <label for={`${uid}-odenen`} class="block text-sm font-medium text-slate-700">Ödenen Taksit Sayısı</label>
+      <input id={`${uid}-odenen`} type="number" min="0" max="600" value="12"
+        class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-100" />
+    </div>
+    <div>
+      <label for={`${uid}-ceza`} class="block text-sm font-medium text-slate-700">Erken Kapatma Cezası (%)</label>
+      <input id={`${uid}-ceza`} type="text" inputmode="decimal" value="0"
+        class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-100" />
+      <p class="mt-1 text-xs text-slate-400">Banka sözleşmenizde yazar; bilmiyorsanız 0 bırakın.</p>
+    </div>
+    <div class="flex items-end">
+      <label class="flex items-center gap-2 text-sm text-slate-700">
+        <input id={`${uid}-muaf`} type="checkbox" class="h-4 w-4 rounded border-slate-300" />
+        Konut kredisi (vergiden muaf)
+      </label>
+    </div>
+    <div class="sm:col-span-2 lg:col-span-3">
+      <button type="submit"
+        class="w-full rounded-lg bg-brand-700 px-6 py-3 font-semibold text-white hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-300 sm:w-auto">
+        Hesapla
+      </button>
+      <p id={`${uid}-hata`} role="alert" class="mt-2 hidden text-sm font-medium text-red-600"></p>
+    </div>
+  </form>
+
+  <div id={`${uid}-sonuc`} class="mt-6 hidden" aria-live="polite">
+    <dl class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="rounded-xl bg-brand-50 p-4">
+        <dt class="text-sm text-slate-600">Kalan Anapara</dt>
+        <dd id={`${uid}-kalan`} class="mt-1 text-2xl font-extrabold text-brand-800">—</dd>
+      </div>
+      <div class="rounded-xl bg-slate-50 p-4">
+        <dt class="text-sm text-slate-600">Erken Kapatma Tutarı</dt>
+        <dd id={`${uid}-kapatma`} class="mt-1 text-xl font-bold text-slate-900">—</dd>
+      </div>
+      <div class="rounded-xl bg-slate-50 p-4">
+        <dt class="text-sm text-slate-600">Kalan Taksit</dt>
+        <dd id={`${uid}-kalan-taksit`} class="mt-1 text-xl font-bold text-slate-900">—</dd>
+      </div>
+      <div class="rounded-xl bg-emerald-50 p-4">
+        <dt class="text-sm text-slate-600">Faiz Tasarrufu</dt>
+        <dd id={`${uid}-tasarruf`} class="mt-1 text-xl font-bold text-emerald-700">—</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<script define:vars={{ uid }}>
+  import { erkenOdemeHesapla, tlBicimle, KrediHesaplamaHatasi } from '../lib/kredi.ts';
+
+  function sayiParse(deger: string): number {
+    const temiz = deger.trim().replace(/\./g, '').replace(',', '.');
+    const sayi = Number(temiz);
+    if (temiz === '' || Number.isNaN(sayi)) throw new KrediHesaplamaHatasi('Lütfen geçerli sayılar girin.');
+    return sayi;
+  }
+
+  const form = document.getElementById(`${uid}-form`);
+  const hataEl = document.getElementById(`${uid}-hata`);
+  const sonucEl = document.getElementById(`${uid}-sonuc`);
+
+  function deger(id: string): string {
+    const el = document.getElementById(id);
+    return el instanceof HTMLInputElement ? el.value : '';
+  }
+  function metin(id: string, m: string): void {
+    const el = document.getElementById(id);
+    if (el) el.textContent = m;
+  }
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!hataEl || !sonucEl) return;
+    hataEl.classList.add('hidden');
+    try {
+      const muafEl = document.getElementById(`${uid}-muaf`);
+      const muaf = muafEl instanceof HTMLInputElement && muafEl.checked;
+      const s = erkenOdemeHesapla({
+        anapara: sayiParse(deger(`${uid}-tutar`)),
+        aylikFaizOrani: sayiParse(deger(`${uid}-faiz`)),
+        vadeAy: Math.trunc(sayiParse(deger(`${uid}-vade`))),
+        odenenAy: Math.trunc(sayiParse(deger(`${uid}-odenen`))),
+        erkenKapanisCezasiOrani: sayiParse(deger(`${uid}-ceza`)),
+        vergidenMuaf: muaf,
+      });
+      metin(`${uid}-kalan`, tlBicimle(s.kalanAnapara));
+      metin(`${uid}-kapatma`, tlBicimle(s.erkenKapatmaTutari));
+      metin(`${uid}-kalan-taksit`, String(s.kalanTaksitSayisi));
+      metin(`${uid}-tasarruf`, tlBicimle(s.tasarruf));
+      sonucEl.classList.remove('hidden');
+    } catch (err) {
+      const mesaj = err instanceof KrediHesaplamaHatasi ? err.message : 'Hesaplama sırasında bir hata oluştu.';
+      hataEl.textContent = mesaj;
+      hataEl.classList.remove('hidden');
+    }
+  });
+</script>

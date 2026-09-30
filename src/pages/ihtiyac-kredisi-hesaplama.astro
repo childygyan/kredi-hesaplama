@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import KrediHesaplayici from '../components/KrediHesaplayici.astro';
+import SssBolumu from '../components/SssBolumu.astro';
+
+const sorular = [
+  {
+    soru: 'İhtiyaç kredisi hesaplama yaparken hangi bilgileri girmeliyim?',
+    cevap:
+      'Kredi tutarını, bankanın verdiği aylık faiz oranını ve vadeyi (ay olarak) girmeniz ' +
+      'yeterlidir. Araç; aylık taksitinizi, toplam geri ödemenizi, faiz ve vergi (KKDF+BSMV) ' +
+      'maliyetinizi hesaplar.',
+  },
+  {
+    soru: 'İhtiyaç kredisinde KKDF ve BSMV ödenir mi?',
+    cevap:
+      'Evet. İhtiyaç kredilerinde faiz tutarı üzerinden KKDF ve BSMV alınır; bu yüzden ' +
+      'ödeyeceğiniz efektif oran, nominal faiz oranından yüksektir. Hesaplayıcımız bu ' +
+      'vergileri otomatik ekler (oranları dilerseniz değiştirebilirsiniz).',
+  },
+  {
+    soru: 'Vade uzadıkça aylık taksit düşer mi?',
+    cevap:
+      'Evet, vade uzadıkça aylık taksit düşer; ancak toplam geri ödeme artar çünkü daha uzun ' +
+      'süre faiz işler. Bütçenize uygun vadeyi seçerken toplam maliyeti de karşılaştırın.',
+  },
+  {
+    soru: 'Erken ödeme yapabilir miyim?',
+    cevap:
+      'Kredinizi vadesinden önce kapatabilirsiniz; ödenmemiş taksitlerin faizi işlemez. ' +
+      'Banka sözleşmenize göre erken kapatma cezası uygulanabilir. Erken Ödeme Hesaplama ' +
+      'sayfamızda tasarrufunuzu hesaplayabilirsiniz.',
+  },
+];
+---
+
+<BaseLayout
+  title="İhtiyaç Kredisi Hesaplama | Aylık Taksit Hesaplama Aracı"
+  description="İhtiyaç kredisi hesaplama aracıyla aylık taksit tutarınızı, toplam geri ödemenizi ve KKDF+BSMV dahil toplam maliyeti hesaplayın. Ücretsiz ve hızlı."
+  path="/ihtiyac-kredisi-hesaplama/"
+>
+  <nav aria-label="Sayfa içi yol" class="text-sm text-slate-500">
+    <a href="/" class="text-brand-700 hover:underline">Kredi Hesaplama</a>
+    <span aria-hidden="true"> / </span>
+    <span>İhtiyaç Kredisi Hesaplama</span>
+  </nav>
+
+  <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+    İhtiyaç Kredisi Hesaplama
+  </h1>
+  <p class="mt-3 max-w-3xl text-lg text-slate-600">
+    İhtiyaç kredinizin aylık taksitini ve toplam maliyetini hesaplayın. Sonuçlara KKDF
+    ve BSMV dahildir.
+  </p>
+
+  <div class="mt-8">
+    <KrediHesaplayici
+      krediTuru="ihtiyac"
+      baslik="İhtiyaç Kredisi Hesaplama Aracı"
+      aciklama="Bankanızın verdiği aylık faiz oranını girin; taksit ve ödeme planınızı görün."
+    />
+  </div>
+
+  <section class="mt-12" aria-label="İhtiyaç kredisi hakkında">
+    <h2 class="text-2xl font-bold text-slate-900">İhtiyaç Kredisi Hesaplama Hakkında</h2>
+    <div class="mt-4 max-w-none space-y-4 text-slate-600">
+      <p>
+        İhtiyaç kredisi; nakit ihtiyacı, borç birleştirme, ev eşyası, eğitim veya sağlık
+        harcamaları gibi bireysel amaçlarla kullanılan, genellikle kısa-orta vadeli bir
+        tüketici kredisidir. Aylık taksit tutarı; çekilen tutara, aylık faiz oranına ve
+        vadeye göre belirlenir.
+      </p>
+      <p>
+        İhtiyaç kredilerinde faiz üzerinden <strong>KKDF ve BSMV</strong> alındığı için
+        cebinizden çıkan gerçek oran, bankanın ilan ettiği nominal orandan yüksektir.
+        Örneğin aylık %3 nominal oranla, vergiler dahil efektif oran %3,75’e çıkar
+        (varsayılan %15 KKDF + %10 BSMV ile — bu bir örnektir, güncel oranları
+        bankanızdan teyit edin). Bu yüzden kredi karşılaştırırken yalnızca nominal
+        orana değil, vergiler dahil toplam geri ödemeye bakın.
+      </p>
+      <p>
+        Vade seçimi bütçenizi doğrudan etkiler: kısa vade yüksek taksit ama düşük toplam
+        maliyet; uzun vade düşük taksit ama yüksek toplam maliyet demektir. Yukarıdaki
+        araçla farklı vadeleri deneyip size uygun dengeyi bulabilirsiniz. Kredi
+        hesaplama genel sayfamıza dönmek için{' '}
+        <a href="/" class="text-brand-700 hover:underline">kredi hesaplama</a> sayfasını
+        ziyaret edebilirsiniz.
+      </p>
+    </div>
+  </section>
+
+  <section class="mt-8" aria-label="İlgili hesaplayıcılar">
+    <h2 class="text-xl font-bold text-slate-900">İlgili Hesaplayıcılar</h2>
+    <ul class="mt-3 list-disc space-y-1 pl-5 text-brand-700">
+      <li><a href="/konut-kredisi-hesaplama/" class="hover:underline">Konut Kredisi Hesaplama</a></li>
+      <li><a href="/tasit-kredisi-hesaplama/" class="hover:underline">Taşıt Kredisi Hesaplama</a></li>
+      <li><a href="/erken-odeme-hesaplama/" class="hover:underline">Erken Ödeme Hesaplama</a></li>
+    </ul>
+  </section>
+
+  <SssBolumu sorular={sorular} />
+</BaseLayout>

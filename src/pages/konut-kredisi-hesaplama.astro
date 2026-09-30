@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import KrediHesaplayici from '../components/KrediHesaplayici.astro';
+import SssBolumu from '../components/SssBolumu.astro';
+
+const sorular = [
+  {
+    soru: 'Konut kredisi hesaplaması neden farklıdır?',
+    cevap:
+      'Konut kredilerinde faiz üzerinden KKDF ve BSMV alınmaz. Bu muafiyet sayesinde aynı ' +
+      'nominal faiz oranında aylık taksit, ihtiyaç veya taşıt kredisine göre daha düşük ' +
+      'çıkar. Hesaplayıcımız bu muafiyeti otomatik uygular.',
+  },
+  {
+    soru: 'Konut kredisinde vade ne kadar olabilir?',
+    cevap:
+      'Konut kredileri genellikle uzun vadelidir (yıllar mertebesinde). Vade uzadıkça aylık ' +
+      'taksit düşer ancak toplam geri ödeme artar. Yukarıdaki araçla farklı vadeleri ' +
+      'karşılaştırabilirsiniz.',
+  },
+  {
+    soru: 'Peşinat, aylık taksiti nasıl etkiler?',
+    cevap:
+      'Peşinat arttıkça çekilen kredi tutarı (anapara) azalır; bu da aylık taksiti ve toplam ' +
+      'geri ödemeyi doğrudan düşürür. Araca peşinat sonrası kalan tutarı girin.',
+  },
+  {
+    soru: 'Konut kredisini erken kapatabilir miyim?',
+    cevap:
+      'Evet. Erken kapatmada ödenmemiş taksitlerin faizi işlemez; banka sözleşmenize göre ' +
+      'erken kapatma cezası uygulanabilir. Erken Ödeme Hesaplama sayfamızda kalan borcunuzu ' +
+      've tasarrufunuzu görebilirsiniz.',
+  },
+];
+---
+
+<BaseLayout
+  title="Konut Kredisi Hesaplama | Mortgage Taksit Hesaplama Aracı"
+  description="Konut kredisi hesaplama aracıyla (KKDF/BSMV muafiyetli) aylık taksit tutarınızı ve toplam geri ödemenizi hesaplayın. Ücretsiz ve hızlı."
+  path="/konut-kredisi-hesaplama/"
+>
+  <nav aria-label="Sayfa içi yol" class="text-sm text-slate-500">
+    <a href="/" class="text-brand-700 hover:underline">Kredi Hesaplama</a>
+    <span aria-hidden="true"> / </span>
+    <span>Konut Kredisi Hesaplama</span>
+  </nav>
+
+  <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+    Konut Kredisi Hesaplama
+  </h1>
+  <p class="mt-3 max-w-3xl text-lg text-slate-600">
+    Konut kredinizin aylık taksitini hesaplayın. Konut kredileri KKDF ve BSMV’den
+    muaftır — hesaplama bunu otomatik dikkate alır.
+  </p>
+
+  <div class="mt-8">
+    <KrediHesaplayici
+      krediTuru="konut"
+      baslik="Konut Kredisi Hesaplama Aracı"
+      aciklama="Peşinat sonrası çekeceğiniz tutarı, aylık faiz oranını ve vadeyi girin."
+    />
+  </div>
+
+  <section class="mt-12" aria-label="Konut kredisi hakkında">
+    <h2 class="text-2xl font-bold text-slate-900">Konut Kredisi Hesaplama Hakkında</h2>
+    <div class="mt-4 max-w-none space-y-4 text-slate-600">
+      <p>
+        Konut kredisi (mortgage), ev alımında kullanılan uzun vadeli bir kredidir. Uzun
+        vade, aylık taksitleri düşürür; ancak vade boyunca işleyen faiz nedeniyle toplam
+        geri ödeme, çekilen tutarın belirgin şekilde üzerine çıkar. Bu yüzden konut
+        kredisinde yalnızca aylık taksite değil, toplam maliyete de bakmak gerekir.
+      </p>
+      <p>
+        Konut kredisinin en önemli farkı <strong>vergi muafiyetidir</strong>: faiz
+        üzerinden KKDF ve BSMV alınmaz. Aynı nominal faiz oranıyla, ihtiyaç kredisine
+        göre daha düşük taksit ödersiniz. Bu muafiyet hesaplayıcımıza gömülüdür; ayrıca
+        bir ayar yapmanız gerekmez.
+      </p>
+      <p>
+        Faiz oranındaki küçük farklar, uzun vadede toplam ödemede büyük fark yaratır.
+        Örneğin 10 yıl vadeli bir kredide aylık orandaki 0,2 puanlık fark bile toplamda
+        on binlerce lira edebilir (örnek amaçlı genel bilgi; kendi hesabınızı yukarıdaki
+        araçla yapın). Farklı bankaların tekliflerini karşılaştırırken vergiler dahil
+        efektif maliyeti ve toplam geri ödemeyi yan yana koyun. Genel{' '}
+        <a href="/" class="text-brand-700 hover:underline">kredi hesaplama</a> sayfamızda
+        diğer kredi türlerini de hesaplayabilirsiniz.
+      </p>
+    </div>
+  </section>
+
+  <section class="mt-8" aria-label="İlgili hesaplayıcılar">
+    <h2 class="text-xl font-bold text-slate-900">İlgili Hesaplayıcılar</h2>
+    <ul class="mt-3 list-disc space-y-1 pl-5 text-brand-700">
+      <li><a href="/ihtiyac-kredisi-hesaplama/" class="hover:underline">İhtiyaç Kredisi Hesaplama</a></li>
+      <li><a href="/tasit-kredisi-hesaplama/" class="hover:underline">Taşıt Kredisi Hesaplama</a></li>
+      <li><a href="/erken-odeme-hesaplama/" class="hover:underline">Erken Ödeme Hesaplama</a></li>
+    </ul>
+  </section>
+
+  <SssBolumu sorular={sorular} />
+</BaseLayout>

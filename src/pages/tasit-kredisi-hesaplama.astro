@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import KrediHesaplayici from '../components/KrediHesaplayici.astro';
+import SssBolumu from '../components/SssBolumu.astro';
+
+const sorular = [
+  {
+    soru: 'Taşıt kredisi hesaplamasında nelere dikkat etmeliyim?',
+    cevap:
+      'Kredi tutarı olarak peşinat sonrası kalan tutarı girin. Taşıt kredilerinde faiz ' +
+      'üzerinden KKDF ve BSMV alındığı için efektif maliyet nominal orandan yüksektir; ' +
+      'hesaplayıcımız vergileri otomatik ekler.',
+  },
+  {
+    soru: 'Sıfır ve ikinci el araçta hesaplama değişir mi?',
+    cevap:
+      'Hesaplama matematiği aynıdır; değişen yalnızca bankanın uyguladığı faiz oranı ve ' +
+      'vade koşullarıdır. Size verilen aylık oranı araca girmeniz yeterlidir.',
+  },
+  {
+    soru: 'Vade seçimi toplam maliyeti nasıl etkiler?',
+    cevap:
+      'Uzun vade aylık taksiti düşürür ama toplam geri ödemeyi artırır. Kısa vade ise ' +
+      'yüksek taksit, düşük toplam maliyet demektir. Farklı vadeleri araçla deneyin.',
+  },
+  {
+    soru: 'Taşıt kredisini erken kapatabilir miyim?',
+    cevap:
+      'Evet; erken kapatmada kalan taksitlerin faizi işlemez. Sözleşmenize göre erken ' +
+      'kapatma cezası olabilir. Erken Ödeme Hesaplama sayfamızda tasarrufunuzu bulun.',
+  },
+];
+---
+
+<BaseLayout
+  title="Taşıt Kredisi Hesaplama | Araç Kredisi Taksit Hesaplama Aracı"
+  description="Taşıt kredisi hesaplama aracıyla aylık taksit tutarınızı, toplam geri ödemenizi ve KKDF+BSMV dahil maliyeti hesaplayın. Ücretsiz ve hızlı."
+  path="/tasit-kredisi-hesaplama/"
+>
+  <nav aria-label="Sayfa içi yol" class="text-sm text-slate-500">
+    <a href="/" class="text-brand-700 hover:underline">Kredi Hesaplama</a>
+    <span aria-hidden="true"> / </span>
+    <span>Taşıt Kredisi Hesaplama</span>
+  </nav>
+
+  <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+    Taşıt Kredisi Hesaplama
+  </h1>
+  <p class="mt-3 max-w-3xl text-lg text-slate-600">
+    Araç kredinizin aylık taksitini ve toplam maliyetini hesaplayın. Sonuçlara KKDF
+    ve BSMV dahildir.
+  </p>
+
+  <div class="mt-8">
+    <KrediHesaplayici
+      krediTuru="tasit"
+      baslik="Taşıt Kredisi Hesaplama Aracı"
+      aciklama="Peşinat sonrası kalan tutarı, aylık faiz oranını ve vadeyi girin."
+    />
+  </div>
+
+  <section class="mt-12" aria-label="Taşıt kredisi hakkında">
+    <h2 class="text-2xl font-bold text-slate-900">Taşıt Kredisi Hesaplama Hakkında</h2>
+    <div class="mt-4 max-w-none space-y-4 text-slate-600">
+      <p>
+        Taşıt kredisi; sıfır veya ikinci el araç alımında kullanılan, araca rehin
+        konularak verilen bir tüketici kredisidir. Aylık taksit; çekilen tutara, aylık
+        faiz oranına ve vadeye göre anüite formülüyle hesaplanır.
+      </p>
+      <p>
+        Taşıt kredilerinde de faiz üzerinden <strong>KKDF ve BSMV</strong> alınır; bu
+        yüzden efektif maliyet nominal oranın üzerindedir (varsayılan %15 KKDF + %10
+        BSMV ile aylık %3 nominal oran, efektifte %3,75’e denk gelir — örnek amaçlıdır,
+        güncel oranları bankanızdan teyit edin). Teklifleri karşılaştırırken toplam geri
+        ödeme tutarına bakın.
+      </p>
+      <p>
+        Peşinat tutarını artırmak, kredi tutarını düşürerek hem taksiti hem toplam
+        maliyeti azaltmanın en etkili yoludur. Araç bedeli ile peşinat arasındaki farkı
+        araca girerek gerçekçi bir taksit planı oluşturun. Diğer kredi türleri için{' '}
+        <a href="/" class="text-brand-700 hover:underline">kredi hesaplama</a> ana
+        sayfasına dönebilirsiniz.
+      </p>
+    </div>
+  </section>
+
+  <section class="mt-8" aria-label="İlgili hesaplayıcılar">
+    <h2 class="text-xl font-bold text-slate-900">İlgili Hesaplayıcılar</h2>
+    <ul class="mt-3 list-disc space-y-1 pl-5 text-brand-700">
+      <li><a href="/ihtiyac-kredisi-hesaplama/" class="hover:underline">İhtiyaç Kredisi Hesaplama</a></li>
+      <li><a href="/konut-kredisi-hesaplama/" class="hover:underline">Konut Kredisi Hesaplama</a></li>
+      <li><a href="/erken-odeme-hesaplama/" class="hover:underline">Erken Ödeme Hesaplama</a></li>
+    </ul>
+  </section>
+
+  <SssBolumu sorular={sorular} />
+</BaseLayout>

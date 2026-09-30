@@ -1,0 +1,181 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SssBolumu from '../components/SssBolumu.astro';
+
+const sorular = [
+  {
+    soru: 'Bir sayının yüzdesi nasıl hesaplanır?',
+    cevap:
+      'Sayıyı yüzde oranıyla çarpıp 100’e bölersiniz. Örneğin 200’ün %15’i: 200 × 15 / 100 = 30’dur.',
+  },
+  {
+    soru: 'Bir sayı diğer sayının yüzde kaçıdır?',
+    cevap:
+      'Parçayı bütüne bölüp 100 ile çarparsınız. Örneğin 30, 200’ün %15’idir (30 / 200 × 100).',
+  },
+  {
+    soru: 'Yüzde artış ve azalış nasıl bulunur?',
+    cevap:
+      'Değişimi eski değere bölüp 100 ile çarparsınız: (yeni − eski) / eski × 100. ' +
+      'Sonuç pozitifse artış, negatifse azalış vardır.',
+  },
+  {
+    soru: 'Kredi maliyetinde yüzde hesabı nerede kullanılır?',
+    cevap:
+      'Faiz oranları, KKDF/BSMV gibi vergiler ve erken kapatma cezaları hep yüzdeyle ' +
+      'ifade edilir. Kredi hesaplamalarınız için kredi hesaplama ana sayfamızdaki araca ' +
+      'bakabilirsiniz.',
+  },
+];
+---
+
+<BaseLayout
+  title="Yüzde Hesaplama | Yüzde, Oran ve Değişim Hesaplama Aracı"
+  description="Yüzde hesaplama aracıyla bir sayının yüzdesini bulun, oran hesaplayın ve yüzde artış/azalışı öğrenin. Ücretsiz."
+  path="/yuzde-hesaplama/"
+>
+  <nav aria-label="Sayfa içi yol" class="text-sm text-slate-500">
+    <a href="/" class="text-brand-700 hover:underline">Kredi Hesaplama</a>
+    <span aria-hidden="true"> / </span>
+    <span>Yüzde Hesaplama</span>
+  </nav>
+
+  <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+    Yüzde Hesaplama
+  </h1>
+  <p class="mt-3 max-w-3xl text-lg text-slate-600">
+    Yüzde bulma, oran hesaplama ve yüzde değişim için pratik araç.
+  </p>
+
+  <section aria-label="Yüzde hesaplama aracı" class="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+    <div class="grid gap-8 lg:grid-cols-3">
+      <form id="yh-yuzde-form" class="space-y-3" novalidate>
+        <h2 class="font-bold text-slate-900">Sayının yüzdesi</h2>
+        <div>
+          <label for="yh-tutar" class="block text-sm font-medium text-slate-700">Sayı</label>
+          <input id="yh-tutar" type="text" inputmode="decimal" value="200"
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" />
+        </div>
+        <div>
+          <label for="yh-oran" class="block text-sm font-medium text-slate-700">Yüzde (%)</label>
+          <input id="yh-oran" type="text" inputmode="decimal" value="15"
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" />
+        </div>
+        <button type="submit" class="rounded-lg bg-brand-700 px-4 py-2 font-semibold text-white hover:bg-brand-800">
+          Hesapla
+        </button>
+        <p class="text-lg font-bold text-brand-800"><output id="yh-yuzde-sonuc">—</output></p>
+      </form>
+
+      <form id="yh-oran-form" class="space-y-3" novalidate>
+        <h2 class="font-bold text-slate-900">Yüzde kaçı?</h2>
+        <div>
+          <label for="yh-parca" class="block text-sm font-medium text-slate-700">Parça</label>
+          <input id="yh-parca" type="text" inputmode="decimal" value="30"
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" />
+        </div>
+        <div>
+          <label for="yh-butun" class="block text-sm font-medium text-slate-700">Bütün</label>
+          <input id="yh-butun" type="text" inputmode="decimal" value="200"
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" />
+        </div>
+        <button type="submit" class="rounded-lg bg-brand-700 px-4 py-2 font-semibold text-white hover:bg-brand-800">
+          Hesapla
+        </button>
+        <p class="text-lg font-bold text-brand-800"><output id="yh-oran-sonuc">—</output></p>
+      </form>
+
+      <form id="yh-degisim-form" class="space-y-3" novalidate>
+        <h2 class="font-bold text-slate-900">Yüzde değişim</h2>
+        <div>
+          <label for="yh-eski" class="block text-sm font-medium text-slate-700">Eski değer</label>
+          <input id="yh-eski" type="text" inputmode="decimal" value="100"
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" />
+        </div>
+        <div>
+          <label for="yh-yeni" class="block text-sm font-medium text-slate-700">Yeni değer</label>
+          <input id="yh-yeni" type="text" inputmode="decimal" value="120"
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" />
+        </div>
+        <button type="submit" class="rounded-lg bg-brand-700 px-4 py-2 font-semibold text-white hover:bg-brand-800">
+          Hesapla
+        </button>
+        <p class="text-lg font-bold text-brand-800"><output id="yh-degisim-sonuc">—</output></p>
+      </form>
+    </div>
+    <p id="yh-hata" role="alert" class="mt-4 hidden text-sm font-medium text-red-600"></p>
+  </section>
+
+  <section class="mt-12" aria-label="Yüzde hesaplama hakkında">
+    <h2 class="text-2xl font-bold text-slate-900">Yüzde Hesaplama Hakkında</h2>
+    <div class="mt-4 max-w-none space-y-4 text-slate-600">
+      <p>
+        Yüzde; bir bütünün yüz eşit parçasından kaçını ifade ettiğini gösteren orandır.
+        Günlük hayatta indirimler, zamlar, faiz oranları ve vergiler hep yüzdeyle ifade
+        edilir. Üç temel yüzde hesabı vardır: bir sayının yüzdesini bulma, bir sayının
+        diğerinin yüzde kaçı olduğunu bulma ve iki değer arasındaki yüzde değişimi.
+      </p>
+      <p>
+        Finansal kararlarda yüzde hesabı özellikle önemlidir: kredi faiz oranları, KKDF
+        ve BSMV gibi vergiler yüzdeyle ifade edilir. Kredinizin gerçek maliyetini
+        görmek için <a href="/" class="text-brand-700 hover:underline">kredi hesaplama</a>{' '}
+        aracımızı kullanabilirsiniz.
+      </p>
+    </div>
+  </section>
+
+  <SssBolumu sorular={sorular} />
+<script>
+  import { yuzdeDegisim, yuzdeHesapla, yuzdeOrani } from '../lib/yuzde.ts';
+
+  function parseTr(deger: string): number {
+    const temiz = deger.trim().replace(/\./g, '').replace(',', '.');
+    const sayi = Number(temiz);
+    if (temiz === '' || Number.isNaN(sayi)) throw new Error('Lütfen geçerli sayılar girin.');
+    return sayi;
+  }
+  function val(id: string): string {
+    const el = document.getElementById(id);
+    return el instanceof HTMLInputElement ? el.value : '';
+  }
+  function out(id: string, metin: string): void {
+    const el = document.getElementById(id);
+    if (el) el.textContent = metin;
+  }
+  const hataEl = document.getElementById('yh-hata');
+  function hataGoster(e: unknown): void {
+    if (!hataEl) return;
+    hataEl.textContent = e instanceof Error ? e.message : 'Hesaplama hatası.';
+    hataEl.classList.remove('hidden');
+  }
+  function hataTemizle(): void {
+    hataEl?.classList.add('hidden');
+  }
+  function fmt(n: number): string {
+    return n.toLocaleString('tr-TR', { maximumFractionDigits: 2 });
+  }
+
+  document.getElementById('yh-yuzde-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    hataTemizle();
+    try {
+      out('yh-yuzde-sonuc', fmt(yuzdeHesapla(parseTr(val('yh-tutar')), parseTr(val('yh-oran')))));
+    } catch (err) { hataGoster(err); }
+  });
+  document.getElementById('yh-oran-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    hataTemizle();
+    try {
+      out('yh-oran-sonuc', '%' + fmt(yuzdeOrani(parseTr(val('yh-parca')), parseTr(val('yh-butun')))));
+    } catch (err) { hataGoster(err); }
+  });
+  document.getElementById('yh-degisim-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    hataTemizle();
+    try {
+      const d = yuzdeDegisim(parseTr(val('yh-eski')), parseTr(val('yh-yeni')));
+      out('yh-degisim-sonuc', (d >= 0 ? '+' : '') + '%' + fmt(d));
+    } catch (err) { hataGoster(err); }
+  });
+</script>
+</BaseLayout>

@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ErkenOdemeHesaplayici from '../components/ErkenOdemeHesaplayici.astro';
+import SssBolumu from '../components/SssBolumu.astro';
+
+const sorular = [
+  {
+    soru: 'Erken ödeme yaparsam ne kadar faizden kurtulurum?',
+    cevap:
+      'Krediyi vadesinden önce kapattığınızda, ödenmemiş taksitlerin faizi ve vergisi ' +
+      'işlemez. Tasarruf tutarı; kalan vade, faiz oranı ve kalan anaparaya göre değişir. ' +
+      'Yukarıdaki araçla kendi krediniz için hesaplayın.',
+  },
+  {
+    soru: 'Erken kapatma cezası nedir?',
+    cevap:
+      'Bazı kredi sözleşmelerinde erken kapatma için kalan anaparanın belli bir yüzdesi ' +
+      'kadar ceza öngörülür. Oran sözleşmenize göre değişir; bu site yasal bir üst sınır ' +
+      'iddia etmez. Ceza oranını sözleşmenizden öğrenip araca girin.',
+  },
+  {
+    soru: 'Ara ödeme mi, erken kapatma mı daha avantajlı?',
+    cevap:
+      'Genel kural: vade ne kadar uzunsa ve faiz ne kadar yüksekse, erken kapatma o kadar ' +
+      'çok faiz tasarrufu sağlar. Kısmi ara ödemelerde de kalan anapara azaldığı için ' +
+      'sonraki taksitlerin faiz yükü düşer.',
+  },
+  {
+    soru: 'Konut kredisinde erken ödeme farklı mı hesaplanır?',
+    cevap:
+      'Matematik aynıdır; tek fark konut kredilerinde KKDF/BSMV olmamasıdır. Araçtaki ' +
+      '“Konut kredisi (vergiden muaf)” kutusunu işaretleyerek doğru sonucu alın.',
+  },
+];
+---
+
+<BaseLayout
+  title="Erken Ödeme Hesaplama | Kredi Erken Kapatma Hesaplama Aracı"
+  description="Kredinizi erken kapatırsanız kalan borcunuzu ve faiz tasarrufunuzu hesaplayın. Erken ödeme hesaplama aracı ücretsiz."
+  path="/erken-odeme-hesaplama/"
+>
+  <nav aria-label="Sayfa içi yol" class="text-sm text-slate-500">
+    <a href="/" class="text-brand-700 hover:underline">Kredi Hesaplama</a>
+    <span aria-hidden="true"> / </span>
+    <span>Erken Ödeme Hesaplama</span>
+  </nav>
+
+  <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+    Erken Ödeme Hesaplama
+  </h1>
+  <p class="mt-3 max-w-3xl text-lg text-slate-600">
+    Kredinizi vadesinden önce kapatmanın size ne kadara mal olacağını ve ne kadar
+    faizden kurtulacağınızı hesaplayın.
+  </p>
+
+  <div class="mt-8">
+    <ErkenOdemeHesaplayici />
+  </div>
+
+  <section class="mt-12" aria-label="Erken ödeme hakkında">
+    <h2 class="text-2xl font-bold text-slate-900">Erken Ödeme Hesaplama Hakkında</h2>
+    <div class="mt-4 max-w-none space-y-4 text-slate-600">
+      <p>
+        Eşit taksitli bir kredide her taksit; anapara, faiz ve vergiden oluşur. Krediyi
+        vadesinden önce kapattığınızda, gelecek taksitlerin faiz ve vergi kısmı
+        işlemez — yalnızca kalan anapara (ve varsa sözleşmedeki erken kapatma cezası)
+        ödenir. Bu yüzden vadeye ne kadar çok zaman varsa, tasarruf o kadar büyük olur.
+      </p>
+      <p>
+        Hesaplayıcı; ödediğiniz taksit sayısından kalan anaparayı bulur, erken kapatma
+        tutarını ve vade sonuna kadar ödeyeceğiniz faize kıyasla tasarrufunuzu gösterir.
+        Erken kapatma cezası oranını bilmiyorsanız 0 bırakın; sözleşmenizde yazan oranı
+        öğrendiğinizde gerçekçi sonuca ulaşırsınız.
+      </p>
+      <p>
+        Kredi karşılaştırması için{' '}
+        <a href="/" class="text-brand-700 hover:underline">kredi hesaplama</a> ana
+        sayfasındaki araca, tür bazında hesap için{' '}
+        <a href="/ihtiyac-kredisi-hesaplama/" class="text-brand-700 hover:underline">ihtiyaç kredisi</a>,{' '}
+        <a href="/konut-kredisi-hesaplama/" class="text-brand-700 hover:underline">konut kredisi</a> ve{' '}
+        <a href="/tasit-kredisi-hesaplama/" class="text-brand-700 hover:underline">taşıt kredisi</a>{' '}
+        sayfalarına bakabilirsiniz.
+      </p>
+    </div>
+  </section>
+
+  <SssBolumu sorular={sorular} />
+</BaseLayout>
