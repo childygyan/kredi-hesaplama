@@ -1,0 +1,239 @@
+---
+/**
+ * KrediHesaplayici — istemci taraflı interaktif kredi hesaplama bileşeni.
+ * DÜRÜSTLÜK: faiz oranı kullanıcıdan alınır; bu bileşen güncel oran sunmaz.
+ * Örnek değerler "örnek" olarak etiketlenir.
+ */
+interface Props {
+  krediTuru: 'ihtiyac' | 'konut' | 'tasit';
+  baslik: string;
+  aciklama?: string;
+}
+
+const { krediTuru, baslik, aciklama } = Astro.props;
+const vergidenMuaf = krediTuru === 'konut';
+const uid = `kh-${krediTuru}`;
+
+const turAdi: Record<Props['krediTuru'], string> = {
+  ihtiyac: 'İhtiyaç Kredisi',
+  konut: 'Konut Kredisi',
+  tasit: 'Taşıt Kredisi',
+};
+---
+
+<section aria-label={baslik} class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+  <h2 class="text-2xl font-bold text-slate-900">{turAdi[krediTuru]} Hesaplama</h2>
+  {aciklama && <p class="mt-2 text-slate-600">{aciklama}</p>}
+
+  <form id={`${uid}-form`} class="mt-6 grid gap-4 sm:grid-cols-3" novalidate>
+    <div>
+      <label for={`${uid}-tutar`} class="block text-sm font-medium text-slate-700">
+        Kredi Tutarı (TL)
+      </label>
+      <input
+        id={`${uid}-tutar`}
+        name="tutar"
+        type="text"
+        inputmode="decimal"
+        value="100.000"
+        class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-100"
+      />
+      <p class="mt-1 text-xs text-slate-400">Örnek değer — kendi tutarınızı yazın.</p>
+    </div>
+    <div>
+      <label for={`${uid}-faiz`} class="block text-sm font-medium text-slate-700">
+        Aylık Faiz Oranı (%)
+      </label>
+      <input
+        id={`${uid}-faiz`}
+        name="faiz"
+        type="text"
+        inputmode="decimal"
+        placeholder="Örn. 3,5"
+        required
+        class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-100"
+      />
+      <p class="mt-1 text-xs text-slate-400">Bankanızın verdiği oranı girin.</p>
+    </div>
+    <div>
+      <label for={`${uid}-vade`} class="block text-sm font-medium text-slate-700">
+        Vade (Ay)
+      </label>
+      <input
+        id={`${uid}-vade`}
+        name="vade"
+        type="number"
+        min="1"
+        max="600"
+        value="12"
+        class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-100"
+      />
+    </div>
+
+    {!vergidenMuaf && (
+      <details class="sm:col-span-3 rounded-lg bg-slate-50 p-4 text-sm">
+        <summary class="cursor-pointer font-medium text-slate-700">
+          Vergi oranları (KKDF / BSMV)
+        </summary>
+        <div class="mt-3 grid gap-4 sm:grid-cols-2">
+          <div>
+            <label for={`${uid}-kkdf`} class="block text-sm font-medium text-slate-700">
+              KKDF (%)
+            </label>
+            <input
+              id={`${uid}-kkdf`}
+              name="kkdf"
+              type="text"
+              inputmode="decimal"
+              value="15"
+              class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2"
+            />
+          </div>
+          <div>
+            <label for={`${uid}-bsmv`} class="block text-sm font-medium text-slate-700">
+              BSMV (%)
+            </label>
+            <input
+              id={`${uid}-bsmv`}
+              name="bsmv"
+              type="text"
+              inputmode="decimal"
+              value="10"
+              class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2"
+            />
+          </div>
+        </div>
+        <p class="mt-2 text-xs text-slate-500">
+          Varsayılan oranlardır; oranlar değişebilir. Güncel oranları bankanızdan teyit edin.
+        </p>
+      </details>
+    )}
+    {vergidenMuaf && (
+      <p class="sm:col-span-3 rounded-lg bg-emerald-50 p-3 text-sm text-emerald-800">
+        Konut kredileri KKDF ve BSMV'den muaftır; hesaplamaya vergi eklenmez.
+      </p>
+    )}
+
+    <div class="sm:col-span-3">
+      <button
+        type="submit"
+        class="w-full rounded-lg bg-brand-700 px-6 py-3 font-semibold text-white hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-300 sm:w-auto"
+      >
+        Hesapla
+      </button>
+      <p class="mt-2 text-xs text-slate-500">
+        Bu araç güncel faiz oranı sunmaz — oranı bankanızdan öğrenip girin. Sonuçlar
+        bilgilendirme amaçlıdır.
+      </p>
+      <p id={`${uid}-hata`} role="alert" class="mt-2 hidden text-sm font-medium text-red-600"></p>
+    </div>
+  </form>
+
+  <div id={`${uid}-sonuc`} class="mt-6 hidden" aria-live="polite">
+    <dl class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="rounded-xl bg-brand-50 p-4">
+        <dt class="text-sm text-slate-600">Aylık Taksit</dt>
+        <dd id={`${uid}-taksit`} class="mt-1 text-2xl font-extrabold text-brand-800">—</dd>
+      </div>
+      <div class="rounded-xl bg-slate-50 p-4">
+        <dt class="text-sm text-slate-600">Toplam Geri Ödeme</dt>
+        <dd id={`${uid}-toplam`} class="mt-1 text-xl font-bold text-slate-900">—</dd>
+      </div>
+      <div class="rounded-xl bg-slate-50 p-4">
+        <dt class="text-sm text-slate-600">Toplam Faiz</dt>
+        <dd id={`${uid}-faiz-toplam`} class="mt-1 text-xl font-bold text-slate-900">—</dd>
+      </div>
+      <div class="rounded-xl bg-slate-50 p-4">
+        <dt class="text-sm text-slate-600">Toplam Vergi (KKDF+BSMV)</dt>
+        <dd id={`${uid}-vergi-toplam`} class="mt-1 text-xl font-bold text-slate-900">—</dd>
+      </div>
+    </dl>
+
+    <details class="mt-6">
+      <summary class="cursor-pointer font-medium text-brand-700">Ödeme planını göster</summary>
+      <div class="mt-3 max-h-96 overflow-auto rounded-lg border border-slate-200">
+        <table class="w-full text-sm">
+          <thead class="sticky top-0 bg-slate-100">
+            <tr>
+              <th class="px-3 py-2 text-left">Ay</th>
+              <th class="px-3 py-2 text-right">Taksit</th>
+              <th class="px-3 py-2 text-right">Anapara</th>
+              <th class="px-3 py-2 text-right">Faiz</th>
+              <th class="px-3 py-2 text-right">Vergi</th>
+              <th class="px-3 py-2 text-right">Kalan</th>
+            </tr>
+          </thead>
+          <tbody id={`${uid}-plan`}></tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+</section>
+
+<script define:vars={{ uid, vergidenMuaf }}>
+  import { hesaplaKredi, odemePlani, tlBicimle, KrediHesaplamaHatasi } from '../lib/kredi.ts';
+
+  /** tr-TR sayı ayrıştırma: "100.000" → 100000, "3,5" → 3.5 */
+  function sayiParse(deger: string): number {
+    const temiz = deger.trim().replace(/\./g, '').replace(',', '.');
+    const sayi = Number(temiz);
+    if (temiz === '' || Number.isNaN(sayi)) throw new KrediHesaplamaHatasi('Lütfen geçerli sayılar girin.');
+    return sayi;
+  }
+
+  const form = document.getElementById(`${uid}-form`);
+  const hataEl = document.getElementById(`${uid}-hata`);
+  const sonucEl = document.getElementById(`${uid}-sonuc`);
+
+  function deger(id: string): string {
+    const el = document.getElementById(id);
+    return el instanceof HTMLInputElement ? el.value : '';
+  }
+
+  function metin(id: string, metin: string): void {
+    const el = document.getElementById(id);
+    if (el) el.textContent = metin;
+  }
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!hataEl || !sonucEl) return;
+    hataEl.classList.add('hidden');
+    try {
+      const girdi = {
+        anapara: sayiParse(deger(`${uid}-tutar`)),
+        aylikFaizOrani: sayiParse(deger(`${uid}-faiz`)),
+        vadeAy: Math.trunc(sayiParse(deger(`${uid}-vade`))),
+        kkdfOrani: vergidenMuaf ? 0 : sayiParse(deger(`${uid}-kkdf`)),
+        bsmvOrani: vergidenMuaf ? 0 : sayiParse(deger(`${uid}-bsmv`)),
+        vergidenMuaf,
+      };
+      const s = hesaplaKredi(girdi);
+      metin(`${uid}-taksit`, tlBicimle(s.aylikTaksit));
+      metin(`${uid}-toplam`, tlBicimle(s.toplamGeriOdeme));
+      metin(`${uid}-faiz-toplam`, tlBicimle(s.toplamFaiz));
+      metin(`${uid}-vergi-toplam`, tlBicimle(s.toplamVergi));
+
+      const tbody = document.getElementById(`${uid}-plan`);
+      if (tbody) {
+        tbody.innerHTML = odemePlani(girdi)
+          .map(
+            (satir) =>
+              `<tr class="border-t border-slate-100 odd:bg-white even:bg-slate-50">` +
+              `<td class="px-3 py-1.5">${satir.ay}</td>` +
+              `<td class="px-3 py-1.5 text-right">${tlBicimle(satir.taksit)}</td>` +
+              `<td class="px-3 py-1.5 text-right">${tlBicimle(satir.anapara)}</td>` +
+              `<td class="px-3 py-1.5 text-right">${tlBicimle(satir.faiz)}</td>` +
+              `<td class="px-3 py-1.5 text-right">${tlBicimle(satir.vergi)}</td>` +
+              `<td class="px-3 py-1.5 text-right">${tlBicimle(satir.kalan)}</td></tr>`,
+          )
+          .join('');
+      }
+      sonucEl.classList.remove('hidden');
+    } catch (err) {
+      const mesaj = err instanceof KrediHesaplamaHatasi ? err.message : 'Hesaplama sırasında bir hata oluştu.';
+      hataEl.textContent = mesaj;
+      hataEl.classList.remove('hidden');
+    }
+  });
+</script>
